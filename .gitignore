@@ -7,5 +7,6 @@
 *.lot
 *.out
 *.gz
+*.toc
 *.xml
 *.vscode
