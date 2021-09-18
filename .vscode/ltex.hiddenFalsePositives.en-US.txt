@@ -1,2 +1,0 @@
-{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QHamza Talaghzi\\E$"}
-{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QArkevia Refonte\\E$"}
