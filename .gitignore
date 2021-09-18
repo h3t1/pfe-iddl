@@ -6,4 +6,6 @@
 *.log
 *.lot
 *.out
+*.gz
+*.xml
 *.vscode
