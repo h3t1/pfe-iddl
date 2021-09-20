@@ -6,7 +6,7 @@
 \addcontentsline{toc}{subsection}{Introduction}
 \subsection*{Introduction}
 Dans ce présent chapitre, nous nous articulerons sur l’étude et l’analyse du projet.
-Pour ce faire, nous débuterons par une étude préalable dans laquelle nous exposerons les fonctionnalités de la GED et ses avantages compte tenu de son implication dans le sujet, puis nous entamerons une étude du système existant, pour ensuite identifier les problèmes, les points à améliorer et les solutions.
+Pour ce faire, nous débuterons par une étude préalable dans laquelle nous exposerons les fonctionnalités de la GED et ses avantages compte tenu de son implication dans le sujet, puis nous entamerons une étude du système existant, pour ensuite identifier les problèmes, les points à améliorer et les solutions envisagées.
 \subsection{Étude préliminaire}
 Avant d'entamer la discussion sur le sujet du stage, nous allons introduire quelques concepts et terminologie de la GED qui nous aideront à mieux comprendre le sujet par la suite.
 \subsubsection{Qu'est-ce que la GED ?}
@@ -76,13 +76,14 @@ Terminologie nécessaire à la compréhension du sujet :
        \item \textbf{SignArchive} : application de la BU Cegedim e-business, hostée au  datacenter de Boulogne et exploitée par l’équipe interne, ayant pour but le stockage et la signature de documents numériques dans des services à valeur légalement probante.
        \item \textbf{Arkevia} : application Web, décrite dans ce document, présentant une  interface web publique consultable par un navigateur, dont le but est l'exploration et la manipulation de documents dans les coffres SignArchive.
        \item \textbf{Arkevia-SRH} : module d'extension pour Arkevia permettant la mise à disposition dans Arkevia de données (traductions, formulaires d’abonnement, conditions  d'utilisation) issues du système d’information de SRH. Ce module permet la prise en charge des abonnements des utilisateurs d’Arkevia au système de dématérialisation des bulletins de paie émis par SRH.
-       \item \textbf{SignArchive-Batcher} : module de traitement générique pour les   applications souhaitant émettre des documents dans  SignArchive, à des fins d’exploration par un utilisateur Arkevia.  Le système d’information de SRH utilise SignArchive-Batcher pour placer les bulletins dans les coffres.
+       \item \textbf{SignArchive-Batcher} : module de traitement générique pour les   applications souhaitant émettre des documents dans SignArchive, à des fins d’exploration par un utilisateur Arkevia.  Le système d’information de SRH utilise SignArchive-Batcher pour placer les bulletins dans les coffres.
    \end{itemize}
 \end{beware}
 \subsubsubsection{Généralités}
 Le développement du produit SignArchive offre à la BU Cegedim e-business, ses clients et partenaires, l’occasion de disposer d’un produit capable à la fois :
 \begin{itemize}
-    \item de stocker des fichiers (de façon légalement probante si besoin) ;\item de les organiser par des métadonnées ;
+    \item de stocker des fichiers (de façon légalement probante si besoin) ;
+    \item de les organiser par des métadonnées ;
     \item de fédérer des droits d’accès dynamiques autour de ces fichiers via une API standard (purement HTTP).
 \end{itemize}
 Au-delà de l’aspect juridique de ce logiciel d’archivage (exploité par les solutions de dématérialisation du groupe), le groupe dispose également d’un moteur de stockage, gestion, recherche et contrôle d'accès qui peut être mis à disposition de toute problématique orientée partage ou publication de document.\\
@@ -164,7 +165,6 @@ Ged-Domain
 Ce module regroupe toutes les entités spécifiques pour la gestion des documents, qui servent à faire le mapping avec les tables.
 
 
-
 Referentiel
 (Deprecated)
 
@@ -179,7 +179,7 @@ Le backend de l'application Arkevia est développé principalement avec la techn
 \begin{itemize}
     \item Spring 2.0 a fourni des espaces de noms XML et le support d'AspectJ ; 
     \item Spring 2.5 a adopté la configuration basée sur les annotations ; 
-    \item Spring 3.0 a introduit une solide base Java 5+ à travers le socle du framework et des fonctionnalités telles que le modèle @Configuration basé sur Java.
+    \item Spring 3.0 a introduit une solide base Java 5+ à travers le socle du framework et des fonctionnalités telles que le modèle @Configuration basé sur Java.\\
 \end{itemize}
 
 Aujourd'hui, le projet Spring et le développement Java ont tous deux évolué de manière significative, incluant à la fois des correctifs de sécurité et de nouvelles fonctionnalités et améliorations, faisant de la migration une tâche assez importante.
@@ -189,10 +189,12 @@ Aujourd'hui, le projet Spring et le développement Java ont tous deux évolué d
 
 
 \subsubsection{Mécanisme de Notification}
-Le mécanisme d'envoi de notifications est responsable de notifier un utilisateur par mail, lorsqu'il y a un nouveau dépôt de document (Bulletin de paie, Note de frais, etc.) sur son coffre-fort par la société à laquelle il appartient.
-Le mécanisme actuel n'est pas capable à traiter la volumétrie de documents en PRODUCTION
+Le mécanisme d'envoi de notifications est responsable de notifier un utilisateur par mail, lorsqu'il y a un nouveau dépôt de document (Bulletin de paie, note de frais, etc.) sur son coffre-fort par la société à laquelle il appartient.\\
 
-En cours...
+Le module de gestion de l'envoi des notifications est intégré à l'application mère Arkevia. Le processus d'envoi est planifié pour être déclenché toutes les 2 heures, et à chaque exécution, l'application Arkevia sollicite le service chargé d'interroger l'API SignArchive pour récupérer la liste des documents déposés et celle des utilisateurs associés afin de préluder à l'envoi des notifications.\\
+
+Le mécanisme actuel n'est pas capable à traiter la volumétrie de documents en production. En effet, ce mécanisme souffre de plusieurs failles et notamment quand le nombre de documents déposés dans SignArchive est élevé, ce système se met à défaillir et à dysfonctionner, ce qui entraîne que certains utilisateurs ne reçoivent plus les notifications sur la présence de documents déposés dans leur coffre-fort ou les reçoivent plusieurs fois pour un même document, etc. 
+
 \subsection{Objectif de la refonte}
 L'objectif est de revoir, corriger et améliorer / traiter les problèmes et les axes d'amélioration identifiés suite à l'audit d'architecture effectué.
 \addcontentsline{toc}{subsection}{Conclusion}
