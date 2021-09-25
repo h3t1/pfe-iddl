@@ -43,7 +43,8 @@ D’un point de vue plus opérationnel et technique, la GED garantit :
 \subsubsection{Présentation du projet Arkevia}
 \textbf{ARKEVIA} est  un service  innovant  et  pratique de coffre-fort  numérique  développé  par  Cegedim  SRH permettant aux salariés des entreprises adhérentes de recevoir et de conserver dans un espace sécurisé les bulletins de salaire et les communications institutionnelles en version électronique dans des conditions optimales de confidentialité et de sécurité. Arkevia permet également aux salariés de classer et de conserver leurs documents personnels importants tels que les pièces d'identité, les diplômes, les factures, etc.\\
 
-Le coffre-fort Arkevia repose sur la technologie \textbf{Morpho Secure Storage} de la société \textbf{MORPHO} qui assure :
+Le coffre-fort Arkevia constitue un espace de stockage sécurisé pour les documents qui y sont déposés (EDI, EDI signé, PDF signé).\\
+Il permet de garantir :
 \begin{itemize}
     \item \textbf{Intégrité} : L'intégrité des documents, au moyen d’une fonction de signature électronique.
     \item \textbf{Confidentialité} : La confidentialité des documents, au moyen d’une fonction de chiffrement de données.
@@ -186,17 +187,20 @@ Aujourd'hui, le projet Spring et le développement Java ont tous deux évolué d
 
 À cet égard, il a été convenu de réaliser une étude comparative sur l'impact d'une telle migration du framework Spring ; le résultat de cette étude fera l'objet d'un travail de développement sur la migration du socle technique d'Arkevia.
 
-
-
+\subsubsection{Refactorisation et nettoyage du code}
+Comme mentionné dans l'introduction, le portail Arkevia a subi plusieurs changements et évolutions au cours des dernières années, rendant le code trop compliqué, redondant et imprégné de mauvaises odeurs (code smells), d'où la nécessité de recourir à un processus de refactoring et d'amélioration du code tout en préservant les fonctionnalités existantes. Le but est de transformer un code inefficace et compliqué en un code plus efficace, de préférence plus simple et plus facile.
 \subsubsection{Mécanisme de Notification}
 Le mécanisme d'envoi de notifications est responsable de notifier un utilisateur par mail, lorsqu'il y a un nouveau dépôt de document (Bulletin de paie, note de frais, etc.) sur son coffre-fort par la société à laquelle il appartient.\\
 
-Le module de gestion de l'envoi des notifications est intégré à l'application mère Arkevia. Le processus d'envoi est planifié pour être déclenché toutes les 2 heures, et à chaque exécution, l'application Arkevia sollicite le service chargé d'interroger l'API SignArchive pour récupérer la liste des documents déposés et celle des utilisateurs associés afin de préluder à l'envoi des notifications.\\
-
-Le mécanisme actuel n'est pas capable à traiter la volumétrie de documents en production. En effet, ce mécanisme souffre de plusieurs failles et notamment quand le nombre de documents déposés dans SignArchive est élevé, ce système se met à défaillir et à dysfonctionner, ce qui entraîne que certains utilisateurs ne reçoivent plus les notifications sur la présence de documents déposés dans leur coffre-fort ou les reçoivent plusieurs fois pour un même document, etc. 
+Le module de gestion de l'envoi des notifications est intégré à l'application mère Arkevia. Le processus d'envoi est planifié pour être déclenché toutes les deux heures, et à chaque exécution, l'application Arkevia sollicite le service chargé d'interroger l'API SignArchive pour récupérer la liste des documents déposés et celle des utilisateurs associés afin de préluder à l'envoi des notifications.
+Le mécanisme actuel n'est pas capable à traiter la volumétrie de documents en production. En effet, ce dernier souffre de plusieurs failles et notamment quand le nombre de documents déposés dans SignArchive est élevé, le système se met à défaillir et à dysfonctionner, ce qui entraîne que certains utilisateurs ne reçoivent plus les notifications sur la présence des documents déposés dans leur coffre-fort ou les reçoivent plusieurs fois pour un même document, etc. 
 
 \subsection{Objectif de la refonte}
 L'objectif est de revoir, corriger et améliorer / traiter les problèmes et les axes d'amélioration identifiés suite à l'audit d'architecture effectué.
+
+Avec un refactoring continu qui adopte une approche progressive, le produit reste utilisable, contrairement à un logiciel qui doit être entièrement réarchitecturé, voire redéveloppé. Comme je l’ai dit, je pense que c’est la meilleure option pour pérenniser un produit digital mais ce n’est pas une solution miracle. Elle demande du temps et des compétences, quitte à reporter le développement de certaines nouvelles fonctionnalités.
+
+Si je peux donner un conseil sur l’organisation, ce serait de garder un temps au refactoring de code dans chaque itération et quand c’est nécessaire lui réserver une itération.
 \addcontentsline{toc}{subsection}{Conclusion}
 \subsection*{Conclusion}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
