@@ -21,6 +21,7 @@
 \RequirePackage{fontspec}
 \usepackage{stackengine}
 \usepackage{xparse}
+\usepackage{appendix}
 %\RequirePackage{luatextra}				    % same, but for LuaLaTex instead of PDFlatex
 %    \defaultfontfeatures{Ligatures=TeX}     % for ligatures in LuaLaTex (may slow down the compilation)
 %\RequirePackage[utf8]{inputenc}			% use source file containing diacritics (not necessary for LuaLaTeX or XeLaTeX)
@@ -634,9 +635,10 @@
 	
 	% custom headers and footers
 	\pageStyleA
-	\includepdf[pages={1}]{cover-pfe@28-07.pdf}
+	\includepdf[pages={1}]{images/cover-pfe@05102021.pdf}
 	%\thispagestyle{fancy}	% force header/footer
 	\newpage
+		\include{cover}
 	    \include{avant-propos}
 		\include{remerciements}	
 		\include{resume}
