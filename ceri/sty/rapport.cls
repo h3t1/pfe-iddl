@@ -180,6 +180,9 @@
 \definecolor{alice}{RGB}{228, 241, 254}
 \definecolor{gallery}{RGB}{238, 238, 238}
 \definecolor{humming}{RGB}{197, 239, 247}
+\definecolor{arkevia-btn-border}{HTML}{a3d7de}
+\definecolor{arkevia-btn-bg}{HTML}{1aa1b4}
+\definecolor{arkevia-btn-bg2}{HTML}{453659}
 % pseudocode background
 %
 \definecolor{LightGrey}{rgb}{0.96,0.96,0.96}    % title page
@@ -635,10 +638,10 @@
 	
 	% custom headers and footers
 	\pageStyleA
-	\includepdf[pages={1}]{images/cover-pfe@05102021.pdf}
+	%\includepdf[pages={1}]{images/cover-pfe@05102021.pdf}
 	%\thispagestyle{fancy}	% force header/footer
 	\newpage
-		\include{cover}
+		%\include{cover}
 	    \include{avant-propos}
 		\include{remerciements}	
 		\include{resume}

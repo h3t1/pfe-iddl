@@ -135,45 +135,6 @@ Au global, on a une répartition des tâches sous la forme schématique suivante
 
     \item En conséquence de quoi, lors de la fabrication des bulletins de paie, le module de gestion interne à SRH peut constituer une archive des bulletins à archiver conforme aux utilisateurs Arkevia inscrits. Ce fichier est poussé au module \textbf{SignArchive-Batcher} qui pousse les fichiers dans \textbf{SignArchive}.
 \end{enumerate}
-\subsubsection{Modules applicatifs}
-Arkevia est composée de huit modules permettant de gérer les différents aspects de l'application.
-\begin{figure}[H]
-    \begin{center}
-        \includegraphics[width=0.56\linewidth]{images/sec2/modules-arkevia.pdf}
-        \caption{Architecture modulaire d'Arkevia}
-        \label{fig:modules_arkevia}
-    \end{center}
-\end{figure}
-\begin{itemize}
-    \item \textbf{HS-SY-Portal}
-    Ce module contient tous les éléments qui composent le corps du front-end Arkevia, y compris les composants Vue, les scripts, les images et les feuilles de style.
-    \item \textbf{HS-SY-Client-Arkevia}
-    Ce module regroupe tous les services propres au client Arkevia, notamment l'inscription, la désactivation du compte, l'exportation de documents, etc.
-    \item \textbf{HS-SY-Ged-Master}
-    Ce module comprend les services de gestion des répertoires et des documents, y compris la consommation de l'API SignArchive.
-    \item \textbf{HS-SY-Client-Standard}
-    Ce module comprend tous les services standards et les classes d'écran utilisés dans l'application.
-\end{itemize}
-Master
-Ce module regroupe les services de configuration, d'authentification, de gestion de compte ...
-
-Master-Domain
-Ce module gère les interactions avec la base de données, il regroupe toutes les entités qui servent à faire le mapping avec les tables.
-
-On trouve aussi l'ensemble des objets d'accès aux données.
-
-Ged-Domain
-Ce module regroupe toutes les entités spécifiques pour la gestion des documents, qui servent à faire le mapping avec les tables.
-
-
-Referentiel
-(Deprecated)
-
-
-
-
-
-
 \subsection{Problèmes et axes d'amélioration}
 \subsubsection{Défis technologiques}
 Le backend de l'application Arkevia est développé principalement avec la technologie Spring 3.x. Ce framework a été publié pour la première fois en 2004 et a subi de nombreuses révisions depuis lors : 

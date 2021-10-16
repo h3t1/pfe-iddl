@@ -4,40 +4,29 @@
 \section{Conceptions et spécification des besoins}
 \addcontentsline{toc}{subsection}{Introduction}
 \subsection*{Introduction}
-\subsection{Étude conceptuelle du système}
-Cette section a pour objectif de présenter une conception détaillée du portail arkevia (l'existant), afin de bien comprendre son fonctionnement et de se familiariser avec le sujet.
+\subsection{Étude conceptuelle du système existant}
+L'objectif de cette section est de fournir une conception détaillée du portail Arkevia (le portail existant), afin de bien appréhender son mode de fonctionnement et de bien cerner les besoins et les exigences liés au sujet.
 \subsubsection{Méthodologie de conception}
 Afin de modéliser et décrire les différents aspects de notre système, nous utiliserons le langage
 graphique de modélisation unifié UML 2.0.\\
-UML est un langage formel et normalisé en termes de modélisation objet. Son indépendance par rapport aux langages de programmation, aux domaines d’application et son caractère polyvalent ont fait de lui un langage universel. Il fournit un moyen astucieux permettant de représenter diverses projections, grâce aux diagrammes.\\\\
+UML est un langage formel et normalisé en termes de modélisation objet. Son indépendance par rapport aux langages de programmation, aux domaines d’application et son caractère polyvalent ont fait de lui un langage universel. Il fournit un moyen astucieux permettant de représenter diverses projections, grâce aux diagrammes.\\
 Les diagrammes sont représentés sous deux types de vue :
 \begin{itemize}
-    \item D’un point de vue \textbf{statique} ou \textbf{structurelle} du domaine avec les diagrammes de structure (Structure Diagrams).
-    \item D’un point de vue \textbf{dynamique} avec les diagrammes de comportement (Behavior Diagrams) et les diagrammes d’interactions (Interaction Diagrams).\\
+    \item D'un point de vue \textbf{statique} ou \textbf{structurelle} du domaine avec les diagrammes de structure (Structure Diagrams).
+    \item D'un point de vue \textbf{dynamique} avec les diagrammes de comportement (Behavior Diagrams) et les diagrammes d’interactions (Interaction Diagrams).\\
 \end{itemize}
 
 L’utilisation itérative des outils UML dans l’analyse et la conception, permet d’obtenir une meilleure compréhension de la configuration système requise et les processus à exécuter dans le système pour répondre à ces exigences.\\
-La première itération d’analyse devrait se situer à un niveau très élevé afin d’identifier
-les objectifs généraux du système et de valider les exigences au moyen d’une analyse du
-cas d’utilisation. L’identification des acteurs et la définition du modèle de cas d’utilisation
-initial font partie de cette première itération. Les itérations d’analyse ultérieures affinent
-davantage la configuration système requise en développant des scénarios de cas d’utilisation, des diagrammes de classes, des diagrammes de séquence, des diagrammes d’états, etc. Chaque itération prend successivement plus en détail la conception du système jusqu’à ce que les objets et les relations dans le système soient clairement et précisément définis dans les diagrammes UML.\\
+La première itération d’analyse devrait se situer à un niveau très élevé afin de déterminer les objectifs généraux du système et de valider les exigences au moyen d’une analyse du cas d’utilisation. L’identification des acteurs et la définition du modèle de cas d’utilisation initial font partie de cette première itération. Les itérations d’analyse ultérieures affinent davantage la configuration système requise en développant des scénarios de cas d’utilisation, des diagrammes de classes, des diagrammes de séquence, des diagrammes d’états, etc. Chaque itération prend successivement plus en détail la conception du système jusqu’à ce que les objets et les relations dans le système soient clairement et précisément définis dans les diagrammes UML.\\
 
-Une fois l’analyse et la conception terminées, nous disposerons d’une vue globale,
-détaillée, et précise sur l’ensemble des spécifications pour les classes, les scénarios, les
-activités et le séquencement dans le système. En général, un lien peut être établi entre
-la rigueur de l’analyse et de la conception d’un système, le temps nécessaire pour le
-développer, et la qualité du produit livré en conséquence.\\
+Une fois l'analyse terminée, nous aurons une vue complète, détaillée et précise de l'ensemble des spécifications des classes, des scénarios, des activités et de leur enchaînement dans le système. En général, on peut établir des liens entre la rigueur de l'analyse et de la conception d'un système, le temps nécessaire pour effectuer les développements et la qualité du produit livré en conséquence.
+\\
 \begin{beware}[title=Conclusion : ]
-L’UML propose des diagrammes pour décrire les différents aspects d’application mais
-ne précise pas la séquence d’étape à suivre ou la démarche à suivre pour la réalisation de
-ces diagrammes. Un processus de livraison est alors nécessaire (voir section ).
+    L'UML propose des diagrammes pour décrire les différents aspects de l'application, mais ne précise pas la séquence des étapes à suivre ni la démarche à suivre pour la mise en œuvre de ces diagrammes. Un processus de livraison est alors nécessaire (voir section \ref{sec:delivery}).
 \end{beware}
 
 \subsubsection{Identification des acteurs}
-Un acteur représente un rôle c’est à dire une personne, un matériel ou un logiciel qui
-interagit directement avec le système. Les acteurs pouvant interagir avec l’application
-sont :
+Un acteur représente un rôle, c'est-à-dire une personne, un matériel ou un logiciel qui interagit directement avec le système. Les acteurs pouvant interagir avec l’application sont :
 \begin{itemize}
     \item \textbf{Employeur} : Personne morale adressant aux utilisateurs des documents.
     \item \textbf{Titulaire} : Salarié, actuel ou passé, de l’Employeur ayant ouvert et utilisant le coffre-fort électronique.
@@ -46,22 +35,20 @@ sont :
 \end{itemize}
 
 \subsubsection{Diagramme de cas d'utilisation général}
-Le diagramme de cas d'utilisation représente la structure des grandes fonctionnalités nécessaires aux utilisateurs du système. C'est le premier diagramme du modèle UML,
-celui où s'assure la relation entre l'utilisateur et les objets que le système met en oeuvre.\\
-Un cas d'utilisation est une description de l'application qui privilégie le point de vue de l'utilisateur. Il décrit de façon graphique et/ou éventuellement textuelle comment un acteur va utiliser l'application pour atteindre un objectif.
+Le diagramme de cas d'utilisation représente la structure des grandes fonctionnalités nécessaires aux utilisateurs du système. C'est le premier diagramme du modèle UML, celui où s'assure la relation entre l'utilisateur et les objets que le système met en œuvre.\\
+Un cas d'utilisation est une description de l'application qui privilégie le point de vue de l'utilisateur. Il décrit de façon graphique (ou éventuellement textuelle) comment un acteur va utiliser l'application pour atteindre un objectif.
 \begin{figure}[H]
     \includegraphics[width=1.1\linewidth]{images/sec3/usecase.pdf}
     \caption{Diagramme de cas d'utilisation général}
+    \label{fig:uc}
 \end{figure}
 \footnotetext[1]{représente le cas d'un acteur (non propriétaire) autorisé à utiliser le compte.}
-\newpage
+\hfill
+\vspace{-1.5cm}
 \subsubsection{Raffinement des cas d'utilisation prioritaires}
-\definecolor{arkevia-btn-border}{HTML}{a3d7de}
-\definecolor{arkevia-btn-bg}{HTML}{1aa1b4}
-\definecolor{arkevia-btn-bg2}{HTML}{453659}
+\subsubsubsection*{Cas d’utilisation : « S'inscrire »}
 \setlength{\fboxrule}{1pt}
 \setlength{\fboxsep}{6pt}
-
 \begin{longtblr}[caption={Description textuelle du cas d’utilisation « S'inscrire »},
     note{1} = {Le mot de passe doit comporter un minimum de 8 caractères et un maximum de 20 caractères, au moins une lettre, au moins un chiffre, au moins un caractère spécial parmi @\#\$\%\^\&+=?\_|!,;.:\/ et ne doit pas contenir d'espaces.}]{
     hlines = {0.5pt,chambray},
@@ -103,8 +90,9 @@ Disposer d'une connexion Internet et d'un navigateur.\\
 \\
 \textbf{Post-condition} & Le système redirige automatiquement le salarié vers la page de connexion.\\
 \end{longtblr}
-
-
+\hfill
+\vspace{-1.4cm}
+\subsubsubsection*{Cas d’utilisation : « Se connecter »}
 \begin{longtblr}[caption={Description textuelle du cas d’utilisation « Se connecter »}]{
     hlines = {0.5pt,chambray},
     vlines = {0.5pt,chambray},
@@ -145,10 +133,10 @@ Disposer d'une connexion Internet et d'un navigateur.\\
 \end{itemize}
 \end{minipage}
 \\
-\textbf{Post-condition} & Le système redirige l'utilisateur vers la page d'acceuil de son compte.\\
+\textbf{Post-condition} & Le système redirige l'utilisateur vers la page d'accueil de son compte.\\
 \end{longtblr}
 
-
+\subsubsubsection*{Cas d’utilisation : « Créer un nouveau répertoire »}
 \begin{longtblr}[caption={Description textuelle du cas d’utilisation « Créer un nouveau répertoire »}, note{2} = {Les noms de répertoire ne peuvent pas contenir d'espaces, ni de caractères non conformes aux règles de nommage des fichiers Unix.}]{
     hlines = {0.5pt,chambray},
     vlines = {0.5pt,chambray},
@@ -186,7 +174,7 @@ S'authentifier avec un identifiant correct.\\
 \end{longtblr}
 
 
-
+\subsubsubsection*{Cas d’utilisation : « Déposer un document »}
 \begin{longtblr}[caption={Description textuelle du cas d’utilisation « Déposer un document »}]{
     hlines = {0.5pt,chambray},
     vlines = {0.5pt,chambray},
@@ -218,7 +206,7 @@ Le fichier dépasse la taille limite autorisée de 50 Mo.\\
 \textbf{Post-condition} & Le système renvoie un message indiquant à l'utilisateur que les documents sont en cours d'importation, puis un autre message indiquant le statut de l'opération lorsqu'elle est terminée.
 \end{longtblr}
 
-
+\subsubsubsection*{Cas d’utilisation : « Gérer un document »}
 \begin{longtblr}[caption={Description textuelle du cas d’utilisation « Gérer un document »}]{
     hlines = {0.5pt,chambray},
     vlines = {0.5pt,chambray},
@@ -261,7 +249,7 @@ S'authentifier avec un identifiant correct.\\
 Pour chaque action effectuée, le système renvoie un message indiquant à l'utilisateur l'état de l'opération lorsqu'elle est terminée.//
 \end{longtblr}
 
-
+\subsubsubsection*{Cas d’utilisation : « Gérer l'affichage des documents »}
 \begin{longtblr}[caption={Description textuelle du cas d’utilisation « Gérer l'affichage des documents »}, , note{3} = {Les filtres actifs s’affichent au-dessus de la section \textbf{Détail du répertoire}.}]{
     hlines = {0.5pt,chambray},
     vlines = {0.5pt,chambray},
@@ -316,6 +304,7 @@ A la fin, l'employé clique sur Appliquer les filtres pour rafraîchir la liste 
 Pour chaque action effectuée, l’affichage est instantanément modifié.
 \end{longtblr}
 
+\subsubsubsection*{Cas d’utilisation : « Gérer le partage des documents »}
 \begin{longtblr}[caption={Description textuelle du cas d’utilisation « Partager un répertoire »},
 note{4} = {La date saisie doit être postérieure à la date du jour.},
 note{5} = {En ajoutant des documents au dossier  partagé, l'utilisateur crée simplement une copie des documents d'origine. Ils ne sont en aucun cas supprimés du répertoire d’origine.},
@@ -396,16 +385,260 @@ S'authentifier avec un identifiant correct.\\
 \textbf{Post-condition} & 
 Le répertoire partagé restera visible dans la liste des répertoires partagés jusqu'à ce que la date d'expiration du partage soit atteinte. Si les invités cliquent sur le lien de téléchargement, le répertoire téléchargé ne contiendra pas les documents supprimés ou sera vide si le salarié a choisi de supprimer tous les documents.
 \end{longtblr}
-\subsubsection{Modélisation des processus métier}
+
+
+\subsubsubsection*{Gestion de compte}
+Pour accéder à la gestion de son compte, le salarié clique sur l’icône \textbf{Mon compte}. Plusieurs fonctionnalités sont proposées :
+
+\begin{longtblr}[caption={Description textuelle du cas d’utilisation « Modifier son adresse email »}]{
+    hlines = {0.5pt,chambray},
+    vlines = {0.5pt,chambray},
+    row{odd} = {bg=azure9},
+    colsep=4pt,
+    rowsep=4pt,
+    colspec={Q[l]X[l]},
+    rowspec={Q[m] Q[m] Q[m] Q[m] Q[m] Q[m]},
+}
+\textbf{Acteur} & Salarié (Titulaire) \\
+\textbf{Objectif} & 
+L'adresse e-mail est utilisée comme login pour le coffre-fort d'Arkevia. C'est également l'adresse où l'acteur reçoit les notifications lorsqu'un document est déposé dans son coffre-fort.\\
+\textbf{Pré-condition} & 
+S'authentifier avec un identifiant correct.\\
+\textbf{Scénario} & 
+\begin{minipage}{\linewidth}
+\raggedright
+\begin{enumerate}[leftmargin=*]
+    \item Le salarié clique sur l’onglet \textbf{Mes informations personnelles}.
+    \item Ensuite, il remplit la nouvelle adresse dans le champ \textbf{E-mail}, puis la confirme dans le champ \textbf{Confirmer E-mail*}.
+    \item Enfin, le salarié clique sur 
+    \fcolorbox{arkevia-btn-bg}{arkevia-btn-bg}{\textcolor{white}{\scriptsize\textbf{MODIFIER}}}.
+\end{enumerate}
+\end{minipage}
+\\
+\textbf{Exception} & \begin{minipage}{\linewidth}
+\raggedright
+\begin{itemize}[leftmargin=*]
+    \item L'employé introduit une adresse électronique qui ne suit pas les règles du format email standard.
+    \item Les deux champs \textbf{E-mail} et \textbf{Confirmer E-mail*} ne sont pas identiques.
+\end{itemize}
+\end{minipage}
+\\
+\textbf{Post-condition} & La nouvelle adresse électronique devient alors le nouveau identifiant du salarié.
+\\
+\end{longtblr}
+
+\begin{longtblr}[caption={Description textuelle du cas d’utilisation « Modifier son mot de passe »}, note{8}={Le nouveau mot de passe doit respecter les règles de sécurité listées dans
+    la partie droite de l’écran}]{
+    hlines = {0.5pt,chambray},
+    vlines = {0.5pt,chambray},
+    row{odd} = {bg=azure9},
+    colsep=4pt,
+    rowsep=4pt,
+    colspec={Q[l]X[l]},
+    rowspec={Q[m] Q[m] Q[m] Q[m] Q[m] Q[m]},
+}
+\textbf{Acteur} & Salarié (Titulaire) \\
+\textbf{Objectif} & 
+La politique de sécurité impose un changement de mot de passe tous les deux mois. Dès que le délai est expiré, il sera nécessaire de le changer lors de la connexion au coffre-fort. Cependant, il est possible de le changer librement à tout moment.\\
+\textbf{Pré-condition} & 
+S'authentifier avec un identifiant correct.\\
+\textbf{Scénario} & 
+\begin{minipage}{\linewidth}
+\raggedright
+\begin{enumerate}[leftmargin=*]
+    \item Le salarié clique sur l’onglet \textbf{Mon mot de passe}.
+    \item Le salarié saisit son mot de passe actuel.
+    \item Ensuite, il saisit son nouveau mot de passe\TblrNote{8}, puis le confirme.
+    \item Enfin, le salarié clique sur 
+    \fcolorbox{arkevia-btn-bg}{arkevia-btn-bg}{\textcolor{white}{\scriptsize\textbf{MODIFIER}}}.
+\end{enumerate}
+\end{minipage}
+\\
+\textbf{Exception} & Le salarié saisit un mot de passe non conforme aux règles de sécurité définies par le système.
+\\
+\textbf{Post-condition} & L'ancien mot de passe est changé.
+\\
+\end{longtblr}
+
+\begin{longtblr}[caption={Description textuelle du cas d’utilisation « Consulter son historique de connexion »}]{
+    hlines = {0.5pt,chambray},
+    vlines = {0.5pt,chambray},
+    row{odd} = {bg=azure9},
+    colsep=4pt,
+    rowsep=4pt,
+    colspec={Q[l]X[l]},
+    rowspec={Q[m] Q[m] Q[m] Q[m] Q[m] Q[m]},
+}
+\textbf{Acteur} & Salarié (Titulaire) \\
+\textbf{Objectif} & 
+Chaque connexion au coffre-fort est historisée. Le salarié peut recevoir une notification par email à chaque connexion et ainsi être averti de tout accès involontaire à son coffre-fort.\\
+\textbf{Pré-condition} & 
+S'authentifier avec un identifiant correct.\\
+\textbf{Scénario} & 
+\begin{minipage}{\linewidth}
+\raggedright
+\begin{enumerate}[leftmargin=*]
+    \item Le salarié clique sur l’onglet \textbf{Historique de connexion}.
+    \item Le salarié peut cliquer sur \fcolorbox{white}{olive4}{\textcolor{white}{\scriptsize \faFileExcelO{ } \textbf{Exporter en Excel}}}  ou \fcolorbox{white}{red4}{\textcolor{white}{\scriptsize \faFilePdfO{ }  \textbf{Exporter en PDF}}} pour récupérer la liste complète des connexions à son coffre-fort.
+    \item Le salarié peut également cocher/décocher la case \textcolor{gray}{\faCheckSquare\ Être averti par e-mail des connexions sur mon compte} pour recevoir ou non une notification à chaque fois que son compte est ouvert, puis cliquer sur  
+    \fcolorbox{arkevia-btn-bg}{arkevia-btn-bg}{\textcolor{white}{\scriptsize\textbf{MISE À JOUR}}} pour enregistrer la modification.
+\end{enumerate}
+\end{minipage}
+\\
+\textbf{Exception} & Aucune.
+\\
+\textbf{Post-condition} & Un tableau affiche les six dernières connexions (date et heure de connexion ainsi
+que l’adresse IP à partir de laquelle a eu lieu la connexion).
+\\
+\end{longtblr}
+
+\begin{longtblr}[caption={Description textuelle du cas d’utilisation « Désigner un contact de confiance »}]{
+    hlines = {0.5pt,chambray},
+    vlines = {0.5pt,chambray},
+    row{odd} = {bg=azure9},
+    colsep=4pt,
+    rowsep=4pt,
+    colspec={Q[l]X[l]},
+    rowspec={Q[m] Q[m] Q[m] Q[m] Q[m] Q[m]},
+}
+\textbf{Acteur} & Salarié (Titulaire) \\
+\textbf{Objectif} & 
+Pouvoir désigner une personne de confiance qui pourra récupérer le contenu du coffre-fort du salarié si ce dernier n'est plus en mesure de l'utiliser.\\
+\textbf{Pré-condition} & 
+S'authentifier avec un identifiant correct.\\
+\textbf{Scénario} & 
+\begin{minipage}{\linewidth}
+\raggedright
+\begin{enumerate}[leftmargin=*]
+    \item Le salarié clique sur l’onglet \textbf{ Contact de confiance}.
+    \item Le salarié remplit le formulaire avec l’identité de la personne de confiance.
+    \item Il confirme son choix en cochant la case autorisant le contact à accéder au contenu de son coffre-fort.
+    \item Enfin, il clique sur  
+    \fcolorbox{arkevia-btn-bg}{arkevia-btn-bg}{\textcolor{white}{\scriptsize\textbf{VALIDER}}} pour enregistrer cette modification.
+\end{enumerate}
+\end{minipage}
+\\
+\textbf{Exception} & Aucune.
+\\
+\textbf{Post-condition} & Le contact de confiance est désigné.
+\\
+\end{longtblr}
+
+\begin{longtblr}[caption={Description textuelle du cas d’utilisation « Désactiver son compte »}]{
+    hlines = {0.5pt,chambray},
+    vlines = {0.5pt,chambray},
+    row{odd} = {bg=azure9},
+    colsep=4pt,
+    rowsep=4pt,
+    colspec={Q[l]X[l]},
+    rowspec={Q[m] Q[m] Q[m] Q[m] Q[m] Q[m]},
+}
+\textbf{Acteur} & Salarié (Titulaire) \\
+\textbf{Objectif} & 
+Demander la désactivation du compte ARKEVIA. \\
+\textbf{Pré-condition} & 
+S'authentifier avec un identifiant correct.\\
+\textbf{Scénario} & 
+\begin{minipage}{\linewidth}
+\raggedright
+\begin{enumerate}[leftmargin=*]
+    \item Le salarié clique sur l’onglet \textbf{ Désactivation du compte}.
+    \item Le salarié tenir compte et lire attentivement les informations relatives à la désactivation de son compte.
+    \item Le salarié coche la case \textcolor{gray}{\faCheckSquare{ } Désactivation du compte ARKEVIA}
+    \item Enfin, il clique sur  
+    \fcolorbox{arkevia-btn-bg}{arkevia-btn-bg}{\textcolor{white}{\scriptsize\textbf{ACCEPTER}}}.
+\end{enumerate}
+\end{minipage}
+\\
+\textbf{Exception} & Si le salarié a une inscription activée aux bulletins de paie électroniques auprès de son employeur, il doit au préalable se désinscrire auprès de son service RH. Sans cette désinscription avant désactivation du compte, l'employeur continuera d’y déposer ses bulletins de paie électroniques sans que lui puisse y accéder.
+\\
+\textbf{Post-condition} & Le salarié recevra un lien par email, actif pendant une heure, pour confirmer la désactivation de son compte.
+\\
+\end{longtblr}
+
+\subsubsection{Modélisation de certains processus métier}
 \subsubsubsection{Diagramme de séquences modélisant le processus d'authentification}
 \subsubsubsection{Diagramme de séquences modélisant ...}
-\subsubsection{Diagramme de classe}
 \subsection{Analyse des besoins}
 \subsubsection{Migration du socle technique}
-En voici les principaux changements sont les suivants :
-cette migration sera donc accompagnée par d'autres migrations surtout les dépendances liées au framework Spring.​
+La migration du socle technique consiste à faire évoluer le stack applicatif d'un projet, pour évoluer généralement sur une technologie plus récente. Une telle migration de projet applicatif englobe un certain nombre de variables qu'il convient maîtriser (migration de données, de technologies, de fichiers...), ce dernier peut vite devenir complexe.\\
+
+
+Il y a deux principaux cas qui conduisent à entamer un projet de migration :
+\begin{itemize}
+    \item \textbf{La migration de projet contrainte par les éditeurs et l'évolution des briques applicatives (bases de données, frameworks, technologies...)}. Un projet applicatif est composé d'un ensemble de briques applicatives qui suivent chacune leur propre cycle, qui est souvent très rapide ! En effet, les éditeurs mettent régulièrement à jour leurs solutions, et très vite, les anciennes versions ne sont plus supportées (ce qui pose des problèmes en termes de sécurité, de maintenabilité et de compatibilité). Il est donc impératif de suivre de très près l'évolution des briques applicatives.
+    \item \textbf{La migration volontaire de projet (plus rare)} : permet d'anticiper l'évolution du projet et/ou du SI, et de mieux préparer l'avenir sur des bases solides et récentes.\\
+\end{itemize}
+
+Dans ce contexte, j'ai dû entreprendre le sujet de la migration afin d'évoluer vers une solution plus optimale tout en préservant la cohérence globale du système en question. Ces migrations représentent un double défi : d'une part rattraper le retard technologique des anciennes briques du système et d'autre part s'assurer que l'application fonctionnera bien, et qu'elle ne sera pas confrontée à des limites de développement de nouvelles fonctionnalités.\\
+
+Nul doute que tous ces défis s’accompagnent de réflexions globales sur le métier, les infrastructures, les applications et la culture pour assurer la cohérence totale des futurs processus créés. Dans cet opus, nous allons nous intéresser à une partie de ces chantiers qui est la migration du framework de base Spring.\\
+
+Avant d'entamer un chantier de transformation d’une telle ampleur, la compréhension du besoin client est fondamentale pour une migration d’un bloc applicatif Legacy vers une nouvelle base. Pour clôturer cette section, nous allons identifier les principales étapes qui serviront à la réalisation de la migration au cours de ses différentes phases que nous allons détailler ci-dessous :\\ 
+
+\begin{enumerate}
+    \item La première phase est celle de l’audit et de la récolte d’information. Le but est de se familiariser avec le contexte global de la migration :
+    \begin{enumerate}
+        \item Audit global du périmètre SI à migrer ;
+        \item Étude des documents d’architecture techniques et fonctionnels ;
+        \item Déterminer les scores techniques des différentes briques applicatives : chaque brique applicative sera évaluée selon plusieurs critères. Parmi ces critères évalués, nous pouvons citer les suivants :
+        \begin{itemize}
+            \item La criticité de l’application ;
+            \item Les technologies et Frameworks utilisés ;
+            \item Les besoins métiers futurs (les évolutions des processus) ;
+            \item Les prérequis de l’infrastructure cible ;
+            \item Les transformations globales en cours de réalisation (Agilité, conteneurisation ou autre évolution technique, changement d’infrastructure en cours, etc.) ;
+            \item L’estimation de l’effort de migration ;
+            \item La conformité avec les standards de développement.
+        \end{itemize}
+        \item Revoir les contraintes techniques et opérationnelles ;
+        \item Analyser les risques d’une manière plus détaillée pour chaque périmètre applicatif ;
+        \item Évaluer les points de blocage.
+    \end{enumerate}
+    \item Au terme de la première phase, nous disposerons d'une vision détaillée du SI qui décrira précisément, via des spécifications techniques, les actions qui seront menées, les modalités de la stratégie de migration, et la trajectoire que l’on voudra lui donner à court, à moyen, ou à long terme, ce qui nous permettra au final de bien procéder aux travaux de développement de la migration.
+\end{enumerate}
 \subsubsection{Factorisation et nettoyage du code}
+\subsubsubsection{Modules applicatifs}
+Arkevia est composée de neuf modules permettant de gérer les différents aspects de l'application :
+
+\begin{itemize}
+    \item \textbf{HS-SY-Portal}
+    Ce module contient tous les éléments qui composent le corps du front-end Arkevia, y compris les composants Vue, les scripts, les images et les feuilles de style.
+    \item \textbf{HS-SY-Client-Arkevia}
+    Ce module regroupe tous les services propres au client Arkevia, notamment l'inscription, la désactivation du compte, l'exportation de documents, etc.
+    \item \textbf{HS-SY-Ged-Master}
+    Ce module comprend les services de gestion des répertoires et des documents, y compris la consommation de l'API SignArchive.
+    \item \textbf{HS-SY-Client-Standard}
+    Ce module comprend tous les services standards et les classes d'écran utilisés dans l'application.
+\end{itemize}
+Master
+Ce module regroupe les services de configuration, d'authentification, de gestion de compte ...
+
+Master-Domain
+Ce module gère les interactions avec la base de données, il regroupe toutes les entités qui servent à faire le mapping avec les tables.
+
+On trouve aussi l'ensemble des objets d'accès aux données.
+
+Ged-Domain
+Ce module regroupe toutes les entités spécifiques pour la gestion des documents, qui servent à faire le mapping avec les tables.
+
+
+Referentiel
+(Deprecated)
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=0.56\linewidth]{images/sec4/modules-arkevia.pdf}
+        \caption{Architecture modulaire d'Arkevia}
+        \label{fig:modules_arkevia}
+    \end{center}
+\end{figure}
+\subsubsubsection{Élimination des liens de dépendance avec la brique de contrôle}
+La brique de contrôle (Semantic Model And Business Control) permet de charger des métadonnées servant comme pour l'affichage de l'entête du tableau pour la description des documents.
+Arkevia utilise 12 appels dans l'application des appels à la brique de controle 
+\subsubsubsection{Dependances }
+Arkevia utilise 12 fois dans l'application des appels à la brique de controle 
 \subsubsection{Optimisation du mécanisme d'envoi des notifications}
-Le traitement par lot, communément appelé Batch dans le jargon informatique, est une problématique très répandue et quasiment incontournable au sein des entreprises et industries qui manipulent d'énormes masses de données. Dans cette section, nous allons vous présenter au travers d'un exemple d'application, la technologie Spring Batch/Spring Boot permettant de répondre à ce type de besoin. Cet article ne se veut pas et ne peut pas être exhaustif, car il s'agit d'une technologie immensément vaste. Mais les différents concepts présentés dans ce cours sont suffisants pour son appropriation.
+
 \subsection{Conclusion}
 %%%%%%%%%%%%%%%%%%
