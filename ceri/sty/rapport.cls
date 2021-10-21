@@ -441,7 +441,7 @@
 \usepackage[most]{tcolorbox}
 \newtcolorbox{beware}[1][]{%
   enhanced jigsaw, % better frame drawing
-  borderline west={5pt}{0pt}{actPink}, % straight vertical line at the left edge
+  borderline west={5pt}{0pt}{red}, % straight vertical line at the left edge
   sharp corners, % No rounded corners
   boxrule=0pt, % no real frame,
   coltitle={red},  % Black colour for title
@@ -459,7 +459,7 @@
 \definecolor{colStrings} {RGB}{42,0,255}		% string literal color
 \definecolor{colLstHL}{RGB}{255,255,153}		% highlight color
 \definecolor{colNumber}{rgb}{0.50,0.50,0.50}	% line number color
-%\definecolor{mauve}{rgb}{0.58,0.00,0.82}
+\definecolor{mauve}{rgb}{0.58,0.00,0.82}
 \lstset{
 %	frame=tb,									% frame around the source code
 	aboveskip=1mm,								% space before the source code
@@ -471,10 +471,11 @@
 	keywordstyle=\color{colKeywords},			% set keyword color
 	commentstyle=\color{colComments},			% set comment color
 	stringstyle=\color{colStrings},				% set string literal color
-    backgroundcolor=\color{bgLightGray},		% set background color
+    backgroundcolor=\color{white},		% set background color
 	numbers=left,								% line numbering: left, none
 	numberstyle=\tiny\color{colNumber},			% line number format
-	breaklines=true,							
+	breaklines=true,
+	rulecolor=\color{chambray},							
 	breakatwhitespace=true,						
 	tabsize=3,									% size of tabulation (in chars)
 	upquote=true,                               % straight quote character (' instead of ’)
@@ -542,9 +543,9 @@
         {¿}{{?`}}1
 }
 % this is just to be able to mention the listings environments... in latex listings environments
-\lstnewenvironment{TeXlstlisting}{\lstset{language=[LaTeX]TeX,numbers=none}}{}
+\lstnewenvironment{TeXlstlisting}{\lstset{language=Java,numbers=none}}{}
 
-
+\RequirePackage{ceri/sty/lstcustom}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % typewriter-type environments
 \RequirePackage{framed}

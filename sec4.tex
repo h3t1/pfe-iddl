@@ -4,26 +4,28 @@
 \section{Conceptions et spécification des besoins}
 \addcontentsline{toc}{subsection}{Introduction}
 \subsection*{Introduction}
+Ce chapitre est voué à fournir une conception détaillée du portail Arkevia (le portail existant), afin d'appréhender son mode de fonctionnement et de bien cerner les besoins et exigences liés au sujet. Nous poursuivons cette conception par l'élaboration des besoins, des contraintes, et des méthodologies et solutions préconisées.
 \subsection{Étude conceptuelle du système existant}
-L'objectif de cette section est de fournir une conception détaillée du portail Arkevia (le portail existant), afin de bien appréhender son mode de fonctionnement et de bien cerner les besoins et les exigences liés au sujet.
+L'objectif de cette première section est de mener une étude conceptuelle approfondie du fonctionnement du système.
 \subsubsection{Méthodologie de conception}
-Afin de modéliser et décrire les différents aspects de notre système, nous utiliserons le langage
-graphique de modélisation unifié UML 2.0.\\
+L’utilisation de la modélisation conceptuelle dans le développement des systèmes d’information permet de prendre en compte les besoins des applications d’une façon plus adéquate et de présenter d’une manière abstraite certains aspects des systèmes physiques et humains.\\
+
+Afin de modéliser et décrire les différents aspects de notre système, nous utiliserons le langage graphique de modélisation unifié UML 2.0.\\
 UML est un langage formel et normalisé en termes de modélisation objet. Son indépendance par rapport aux langages de programmation, aux domaines d’application et son caractère polyvalent ont fait de lui un langage universel. Il fournit un moyen astucieux permettant de représenter diverses projections, grâce aux diagrammes.\\
-Les diagrammes sont représentés sous deux types de vue :
-\begin{itemize}
-    \item D'un point de vue \textbf{statique} ou \textbf{structurelle} du domaine avec les diagrammes de structure (Structure Diagrams).
-    \item D'un point de vue \textbf{dynamique} avec les diagrammes de comportement (Behavior Diagrams) et les diagrammes d’interactions (Interaction Diagrams).\\
-\end{itemize}
+% Les diagrammes sont représentés sous deux types de vue :
+% \begin{itemize}
+%     \item D'un point de vue \textbf{statique} ou \textbf{structurelle} du domaine avec les diagrammes de structure (Structure Diagrams).
+%     \item D'un point de vue \textbf{dynamique} avec les diagrammes de comportement (Behavior Diagrams) et les diagrammes d’interactions (Interaction Diagrams).\\
+% \end{itemize}
 
-L’utilisation itérative des outils UML dans l’analyse et la conception, permet d’obtenir une meilleure compréhension de la configuration système requise et les processus à exécuter dans le système pour répondre à ces exigences.\\
-La première itération d’analyse devrait se situer à un niveau très élevé afin de déterminer les objectifs généraux du système et de valider les exigences au moyen d’une analyse du cas d’utilisation. L’identification des acteurs et la définition du modèle de cas d’utilisation initial font partie de cette première itération. Les itérations d’analyse ultérieures affinent davantage la configuration système requise en développant des scénarios de cas d’utilisation, des diagrammes de classes, des diagrammes de séquence, des diagrammes d’états, etc. Chaque itération prend successivement plus en détail la conception du système jusqu’à ce que les objets et les relations dans le système soient clairement et précisément définis dans les diagrammes UML.\\
+% L’utilisation itérative des outils UML dans l’analyse et la conception, permet d’obtenir une meilleure compréhension de la configuration système requise et les processus à exécuter dans le système pour répondre à ces exigences.\\
+% La première itération d’analyse devrait se situer à un niveau très élevé afin de déterminer les objectifs généraux du système et de valider les exigences au moyen d’une analyse du cas d’utilisation. L’identification des acteurs et la définition du modèle de cas d’utilisation initial font partie de cette première itération. Les itérations d’analyse ultérieures affinent davantage la configuration système requise en développant des scénarios de cas d’utilisation, des diagrammes de classes, des diagrammes de séquence, des diagrammes d’états, etc. Chaque itération prend successivement plus en détail la conception du système jusqu’à ce que les objets et les relations dans le système soient clairement et précisément définis dans les diagrammes UML.\\
 
-Une fois l'analyse terminée, nous aurons une vue complète, détaillée et précise de l'ensemble des spécifications des classes, des scénarios, des activités et de leur enchaînement dans le système. En général, on peut établir des liens entre la rigueur de l'analyse et de la conception d'un système, le temps nécessaire pour effectuer les développements et la qualité du produit livré en conséquence.
-\\
-\begin{beware}[title=Conclusion : ]
-    L'UML propose des diagrammes pour décrire les différents aspects de l'application, mais ne précise pas la séquence des étapes à suivre ni la démarche à suivre pour la mise en œuvre de ces diagrammes. Un processus de livraison est alors nécessaire (voir section \ref{sec:delivery}).
-\end{beware}
+% Une fois l'analyse terminée, nous aurons une vue complète, détaillée et précise de l'ensemble des spécifications des classes, des scénarios, des activités et de leur enchaînement dans le système. En général, on peut établir des liens entre la rigueur de l'analyse et de la conception d'un système, le temps nécessaire pour effectuer les développements et la qualité du produit livré en conséquence.
+% \\
+% \begin{beware}[title=Conclusion : ]
+%     L'UML propose des diagrammes pour décrire les différents aspects de l'application, mais ne précise pas la séquence des étapes à suivre ni la démarche à suivre pour la mise en œuvre de ces diagrammes. Un processus de livraison est alors nécessaire (voir section \ref{sec:delivery}).
+% \end{beware}
 
 \subsubsection{Identification des acteurs}
 Un acteur représente un rôle, c'est-à-dire une personne, un matériel ou un logiciel qui interagit directement avec le système. Les acteurs pouvant interagir avec l’application sont :
@@ -49,11 +51,10 @@ Un cas d'utilisation est une description de l'application qui privilégie le poi
 \subsubsubsection*{Cas d’utilisation : « S'inscrire »}
 \setlength{\fboxrule}{1pt}
 \setlength{\fboxsep}{6pt}
-\begin{longtblr}[caption={Description textuelle du cas d’utilisation « S'inscrire »},
+\begin{longtblr}[caption={Description textuelle du CU « S'inscrire »},
     note{1} = {Le mot de passe doit comporter un minimum de 8 caractères et un maximum de 20 caractères, au moins une lettre, au moins un chiffre, au moins un caractère spécial parmi @\#\$\%\^\&+=?\_|!,;.:\/ et ne doit pas contenir d'espaces.}]{
     hlines = {0.5pt,chambray},
     vlines = {0.5pt,chambray},
-    row{odd} = {bg=azure9},
     colsep=4pt,
     rowsep=4pt,
     colspec={Q[l]X[l]},
@@ -93,10 +94,9 @@ Disposer d'une connexion Internet et d'un navigateur.\\
 \hfill
 \vspace{-1.4cm}
 \subsubsubsection*{Cas d’utilisation : « Se connecter »}
-\begin{longtblr}[caption={Description textuelle du cas d’utilisation « Se connecter »}]{
+\begin{longtblr}[caption={Description textuelle du CU « Se connecter »}]{
     hlines = {0.5pt,chambray},
     vlines = {0.5pt,chambray},
-    row{odd} = {bg=azure9},
     colsep=4pt,
     rowsep=4pt,
     colspec={Q[l]X[l]},
@@ -137,10 +137,9 @@ Disposer d'une connexion Internet et d'un navigateur.\\
 \end{longtblr}
 
 \subsubsubsection*{Cas d’utilisation : « Créer un nouveau répertoire »}
-\begin{longtblr}[caption={Description textuelle du cas d’utilisation « Créer un nouveau répertoire »}, note{2} = {Les noms de répertoire ne peuvent pas contenir d'espaces, ni de caractères non conformes aux règles de nommage des fichiers Unix.}]{
+\begin{longtblr}[caption={Description textuelle du CU « Créer un nouveau répertoire »}, note{2} = {Les noms de répertoire ne peuvent pas contenir d'espaces, ni de caractères non conformes aux règles de nommage des fichiers Unix.}]{
     hlines = {0.5pt,chambray},
     vlines = {0.5pt,chambray},
-    row{odd} = {bg=azure9},
     colsep=4pt,
     rowsep=4pt,
     colspec={Q[l]X[l]},
@@ -175,10 +174,9 @@ S'authentifier avec un identifiant correct.\\
 
 
 \subsubsubsection*{Cas d’utilisation : « Déposer un document »}
-\begin{longtblr}[caption={Description textuelle du cas d’utilisation « Déposer un document »}]{
+\begin{longtblr}[caption={Description textuelle du CU « Déposer un document »}]{
     hlines = {0.5pt,chambray},
     vlines = {0.5pt,chambray},
-    row{odd} = {bg=azure9},
     colsep=4pt,
     rowsep=4pt,
     colspec={Q[l]X[l]},
@@ -207,10 +205,9 @@ Le fichier dépasse la taille limite autorisée de 50 Mo.\\
 \end{longtblr}
 
 \subsubsubsection*{Cas d’utilisation : « Gérer un document »}
-\begin{longtblr}[caption={Description textuelle du cas d’utilisation « Gérer un document »}]{
+\begin{longtblr}[caption={Description textuelle du CU « Gérer un document »}]{
     hlines = {0.5pt,chambray},
     vlines = {0.5pt,chambray},
-    row{odd} = {bg=azure9},
     colsep=4pt,
     rowsep=4pt,
     colspec={Q[l]X[l]},
@@ -250,10 +247,9 @@ Pour chaque action effectuée, le système renvoie un message indiquant à l'uti
 \end{longtblr}
 
 \subsubsubsection*{Cas d’utilisation : « Gérer l'affichage des documents »}
-\begin{longtblr}[caption={Description textuelle du cas d’utilisation « Gérer l'affichage des documents »}, , note{3} = {Les filtres actifs s’affichent au-dessus de la section \textbf{Détail du répertoire}.}]{
+\begin{longtblr}[caption={Description textuelle du CU « Gérer l'affichage des documents »}, , note{3} = {Les filtres actifs s’affichent au-dessus de la section \textbf{Détail du répertoire}.}]{
     hlines = {0.5pt,chambray},
-    vlines = {0.5pt,chambray},
-    row{odd} = {bg=azure9},
+    vlines = {0.5pt,chambray},    
     colsep=4pt,
     rowsep=4pt,
     colspec={Q[l]X[l]},
@@ -303,15 +299,14 @@ A la fin, l'employé clique sur Appliquer les filtres pour rafraîchir la liste 
 \textbf{Post-condition} & 
 Pour chaque action effectuée, l’affichage est instantanément modifié.
 \end{longtblr}
-
+\break
 \subsubsubsection*{Cas d’utilisation : « Gérer le partage des documents »}
-\begin{longtblr}[caption={Description textuelle du cas d’utilisation « Partager un répertoire »},
+\begin{longtblr}[caption={Description textuelle du CU « Partager un répertoire »},
 note{4} = {La date saisie doit être postérieure à la date du jour.},
 note{5} = {En ajoutant des documents au dossier  partagé, l'utilisateur crée simplement une copie des documents d'origine. Ils ne sont en aucun cas supprimés du répertoire d’origine.},
 note{6} = {Il est impératif de cocher la case Envoyer une notification aux invités, sinon ils ne recevront pas de notification pour télécharger les documents qui leur sont partagés.}]{
     hlines = {0.5pt,chambray},
-    vlines = {0.5pt,chambray},
-    row{odd} = {bg=azure9},
+    vlines = {0.5pt,chambray},   
     colsep=4pt,
     rowsep=4pt,
     colspec={Q[l]X[l]},
@@ -358,10 +353,9 @@ Les invités reçoivent un mail contenant un lien de téléchargement des docume
 \end{longtblr}
 
 
-\begin{longtblr}[caption={Description textuelle du cas d’utilisation « Supprimer un partage »}, note{7} = {Pour supprimer tous les documents du dossier partagé, le salarié doit supprimer individuellement chaque document contenu au sein du répertoire.}]{
+\begin{longtblr}[caption={Description textuelle du CU « Supprimer un partage »}, note{7} = {Pour supprimer tous les documents du dossier partagé, le salarié doit supprimer individuellement chaque document contenu au sein du répertoire.}]{
     hlines = {0.5pt,chambray},
-    vlines = {0.5pt,chambray},
-    row{odd} = {bg=azure9},
+    vlines = {0.5pt,chambray}, 
     colsep=4pt,
     rowsep=4pt,
     colspec={Q[l]X[l]},
@@ -390,10 +384,9 @@ Le répertoire partagé restera visible dans la liste des répertoires partagés
 \subsubsubsection*{Gestion de compte}
 Pour accéder à la gestion de son compte, le salarié clique sur l’icône \textbf{Mon compte}. Plusieurs fonctionnalités sont proposées :
 
-\begin{longtblr}[caption={Description textuelle du cas d’utilisation « Modifier son adresse email »}]{
+\begin{longtblr}[caption={Description textuelle du CU « Modifier son adresse email »}]{
     hlines = {0.5pt,chambray},
     vlines = {0.5pt,chambray},
-    row{odd} = {bg=azure9},
     colsep=4pt,
     rowsep=4pt,
     colspec={Q[l]X[l]},
@@ -427,11 +420,10 @@ S'authentifier avec un identifiant correct.\\
 \\
 \end{longtblr}
 
-\begin{longtblr}[caption={Description textuelle du cas d’utilisation « Modifier son mot de passe »}, note{8}={Le nouveau mot de passe doit respecter les règles de sécurité listées dans
+\begin{longtblr}[caption={Description textuelle du CU « Modifier son mot de passe »}, note{8}={Le nouveau mot de passe doit respecter les règles de sécurité listées dans
     la partie droite de l’écran}]{
     hlines = {0.5pt,chambray},
-    vlines = {0.5pt,chambray},
-    row{odd} = {bg=azure9},
+    vlines = {0.5pt,chambray},  
     colsep=4pt,
     rowsep=4pt,
     colspec={Q[l]X[l]},
@@ -460,10 +452,9 @@ S'authentifier avec un identifiant correct.\\
 \\
 \end{longtblr}
 
-\begin{longtblr}[caption={Description textuelle du cas d’utilisation « Consulter son historique de connexion »}]{
+\begin{longtblr}[caption={Description textuelle du CU « Consulter son historique de connexion »}]{
     hlines = {0.5pt,chambray},
     vlines = {0.5pt,chambray},
-    row{odd} = {bg=azure9},
     colsep=4pt,
     rowsep=4pt,
     colspec={Q[l]X[l]},
@@ -479,7 +470,7 @@ S'authentifier avec un identifiant correct.\\
 \raggedright
 \begin{enumerate}[leftmargin=*]
     \item Le salarié clique sur l’onglet \textbf{Historique de connexion}.
-    \item Le salarié peut cliquer sur \fcolorbox{white}{olive4}{\textcolor{white}{\scriptsize \faFileExcelO{ } \textbf{Exporter en Excel}}}  ou \fcolorbox{white}{red4}{\textcolor{white}{\scriptsize \faFilePdfO{ }  \textbf{Exporter en PDF}}} pour récupérer la liste complète des connexions à son coffre-fort.
+    \item Le salarié peut cliquer sur \fcolorbox{white}{olive4}{\textcolor{white}{\scriptsize \faFileExcelO{ } \textbf{Exporter en Excel}}}  ou \fcolorbox{white}{red6}{\textcolor{white}{\scriptsize \faFilePdfO{ }  \textbf{Exporter en PDF}}} pour récupérer la liste complète des connexions à son coffre-fort.
     \item Le salarié peut également cocher/décocher la case \textcolor{gray}{\faCheckSquare\ Être averti par e-mail des connexions sur mon compte} pour recevoir ou non une notification à chaque fois que son compte est ouvert, puis cliquer sur  
     \fcolorbox{arkevia-btn-bg}{arkevia-btn-bg}{\textcolor{white}{\scriptsize\textbf{MISE À JOUR}}} pour enregistrer la modification.
 \end{enumerate}
@@ -492,10 +483,9 @@ que l’adresse IP à partir de laquelle a eu lieu la connexion).
 \\
 \end{longtblr}
 
-\begin{longtblr}[caption={Description textuelle du cas d’utilisation « Désigner un contact de confiance »}]{
+\begin{longtblr}[caption={Description textuelle du CU « Désigner un contact de confiance »}]{
     hlines = {0.5pt,chambray},
     vlines = {0.5pt,chambray},
-    row{odd} = {bg=azure9},
     colsep=4pt,
     rowsep=4pt,
     colspec={Q[l]X[l]},
@@ -524,10 +514,9 @@ S'authentifier avec un identifiant correct.\\
 \\
 \end{longtblr}
 
-\begin{longtblr}[caption={Description textuelle du cas d’utilisation « Désactiver son compte »}]{
+\begin{longtblr}[caption={Description textuelle du CU « Désactiver son compte »}]{
     hlines = {0.5pt,chambray},
     vlines = {0.5pt,chambray},
-    row{odd} = {bg=azure9},
     colsep=4pt,
     rowsep=4pt,
     colspec={Q[l]X[l]},
@@ -555,10 +544,6 @@ S'authentifier avec un identifiant correct.\\
 \textbf{Post-condition} & Le salarié recevra un lien par email, actif pendant une heure, pour confirmer la désactivation de son compte.
 \\
 \end{longtblr}
-
-\subsubsection{Modélisation de certains processus métier}
-\subsubsubsection{Diagramme de séquences modélisant le processus d'authentification}
-\subsubsubsection{Diagramme de séquences modélisant ...}
 \subsection{Analyse des besoins}
 \subsubsection{Migration du socle technique}
 La migration du socle technique consiste à faire évoluer le stack applicatif d'un projet, pour évoluer généralement sur une technologie plus récente. Une telle migration de projet applicatif englobe un certain nombre de variables qu'il convient maîtriser (migration de données, de technologies, de fichiers...), ce dernier peut vite devenir complexe.\\
@@ -597,48 +582,169 @@ Avant d'entamer un chantier de transformation d’une telle ampleur, la compréh
     \end{enumerate}
     \item Au terme de la première phase, nous disposerons d'une vision détaillée du SI qui décrira précisément, via des spécifications techniques, les actions qui seront menées, les modalités de la stratégie de migration, et la trajectoire que l’on voudra lui donner à court, à moyen, ou à long terme, ce qui nous permettra au final de bien procéder aux travaux de développement de la migration.
 \end{enumerate}
-\subsubsection{Factorisation et nettoyage du code}
-\subsubsubsection{Modules applicatifs}
-Arkevia est composée de neuf modules permettant de gérer les différents aspects de l'application :
-
+\subsubsection{Refactorisation et nettoyage du code}
+\subsubsubsection{Refactorisation des modules applicatifs}
+Arkevia est composée de huit modules permettant de gérer les différents aspects de l'application :
 \begin{itemize}
-    \item \textbf{HS-SY-Portal}
+    \item \textbf{HS-SY-Portal} :
     Ce module contient tous les éléments qui composent le corps du front-end Arkevia, y compris les composants Vue, les scripts, les images et les feuilles de style.
-    \item \textbf{HS-SY-Client-Arkevia}
+    \item \textbf{HS-SY-Client-Arkevia} :
     Ce module regroupe tous les services propres au client Arkevia, notamment l'inscription, la désactivation du compte, l'exportation de documents, etc.
-    \item \textbf{HS-SY-Ged-Master}
-    Ce module comprend les services de gestion des répertoires et des documents, y compris la consommation de l'API SignArchive.
-    \item \textbf{HS-SY-Client-Standard}
+    \item \textbf{HS-SY-Client-Standard} :
     Ce module comprend tous les services standards et les classes d'écran utilisés dans l'application.
+    \item \textbf{HS-SY-Ged-Master} :
+    Ce module comprend les services de gestion des répertoires et des documents, y compris la consommation de l'API SignArchive.
+    \item \textbf{HS-SY-Master} : Ce module inclut les services de configuration, d'authentification, de gestion des comptes, etc.
+    \item \textbf{HS-SY-Master-Domain} : Ce module permet de gérer les interactions avec la base de données, il rassemble toutes les entités qui sont utilisées pour faire le mapping avec les tables. On y trouve aussi tous les objets d'accès aux données.
+    \item \textbf{HS-SY-Ged-Domain} : Ce module regroupe toutes les entités spécifiques à la gestion des documents, qui serviront à faire le mapping avec les tables.
+    \item \textbf{HS-SY-Referentiel} : Ce module expose les services et les méthodes nécessaires pour établir la connexion avec l'API de SignArchive par le biais de requêtes Solr.\\
 \end{itemize}
-Master
-Ce module regroupe les services de configuration, d'authentification, de gestion de compte ...
 
-Master-Domain
-Ce module gère les interactions avec la base de données, il regroupe toutes les entités qui servent à faire le mapping avec les tables.
+L'objectif est de réorganiser, restructurer et clarifier le code existant. Le besoin est de factoriser les modules clients pour rendre l'application plus générique. Pour ce faire, nous devons d'abord étudier la possibilité de virer le module \lstinline|HS-SY-Client-Standard|. Si cela est faisable, nous serons amenés à fédérer toute la partie gestion des écrans clients du module \lstinline|HS-SY-Client-Standard| au module \lstinline|HS-Sy-Client-Arkevia|, puis à retirer entièrement le module \lstinline|HS-SY-Client-Standard| du projet.\\
 
-On trouve aussi l'ensemble des objets d'accès aux données.
-
-Ged-Domain
-Ce module regroupe toutes les entités spécifiques pour la gestion des documents, qui servent à faire le mapping avec les tables.
-
-
-Referentiel
-(Deprecated)
-
+D'autre part, pour garder plus de clarté et d'organisation dans les fichiers de POM, nous pourrons également détacher les liens de dépendance directe entre les modules pour ne garder au final qu'un seul lien de dépendance transitif entre ces modules (voir figure \ref{fig:modules_arkevia}).
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=0.56\linewidth]{images/sec4/modules-arkevia.pdf}
+        \includegraphics[width=0.6\linewidth]{images/sec4/dep.pdf}
         \caption{Architecture modulaire d'Arkevia}
         \label{fig:modules_arkevia}
     \end{center}
 \end{figure}
-\subsubsubsection{Élimination des liens de dépendance avec la brique de contrôle}
-La brique de contrôle (Semantic Model And Business Control) permet de charger des métadonnées servant comme pour l'affichage de l'entête du tableau pour la description des documents.
-Arkevia utilise 12 appels dans l'application des appels à la brique de controle 
-\subsubsubsection{Dependances }
-Arkevia utilise 12 fois dans l'application des appels à la brique de controle 
+\subsubsubsection{Renoncer à recourir à la brique de contrôle}
+La brique de contrôle (Semantic Model And Business Control) est un service web tiers utilisé pour charger des métadonnées qui servent principalement d'en-tête pour le tableau de description des documents.\\
+Suite à un audit mené sur l'application Arkevia afin d'identifier et de déboguer les réponses des appels provenant de cette brique, un total de douze appels a été relevé dans le code de l'application. En effet, cette brique de contrôle soulève des problèmes de performance, notamment un problème de temps d'arrêt très élevé. Afin d'éviter ce goulot d'étranglement, il a été convenu d'éliminer cette dépendance et de la remplacer par un simple appel à la base de données compte tenu que les réponses provenant de cette brique ne sont rien d'autre que des données et des configurations statiques.
+\subsubsubsection{Retrait des dépendances inutilisables}
+C'est un scénario typique, lorsque l'application est en cours de développement, et que plusieurs membres de l'équipe travaillent dessus, on risque de se trouver face à une série de dépendances inutiles dans les fichiers pom.xml du projet.\\
+Il est alors ardu de déterminer manuellement quels sont les jars que l'application ne requiert pas. Pour résoudre ce problème, nous pouvons nous servir du plugin maven-dependency, en particulier l'objectif \lstinline|dependency:analyze|, qui permet d'analyser les dépendances du projet et de déterminer celles qui sont : utilisées et déclarées ; utilisées et non déclarées ; utilisées et déclarées.
 \subsubsection{Optimisation du mécanisme d'envoi des notifications}
+Le mécanisme de notification est responsable de prévenir un utilisateur par email lorsqu'il y a un nouveau dépôt de document (par exemple un bulletin de salaire) sur son coffre-fort par l'entreprise à laquelle il est abonné.\\
 
-\subsection{Conclusion}
+Prérequis nécessaire à la compréhension de sujet :
+\begin{itemize}
+    \item \textbf{Document} :  bulletins de paie, ou tout autre document RH au format dématérialisé.
+    \item \textbf{Lot de documents} :  un nombre limité (batch) de documents (ajustables).
+    \item \textbf{Notification} : Un mail générique transmis à un utilisateur pour le notifier du dépôt d'un document.
+    \item \textbf{Scan} : une requête lancée à l'API SignArchive afin de vérifier s'il y a des dépôts de documents.
+    \item \textbf{Cron} : une tâche planifiée qui déclenche l'exécution du Scan toutes les deux heures (configurable).
+\end{itemize}
+\subsubsubsection*{Récupération de données}
+Le processus de notification est déclenché toutes les deux heures grâce à l'annotation \textbf{@Scheduled} fournie par Spring.\\
+Tout d'abord, nous récupérons la date du dernier scan effectué, et nous enregistrons le nouveau scan avec la date du jour dans la table \lstinline|GED_BATCH_SCAN_UPLOAD_DOC|. Le date du dernier scan est utilisé par la suite, pour récupérer tous les documents déposés à partir de cette date jusqu'à le moment de lancement du nouveau scan.
+\newpage
+\begin{longtblr}[caption={Exemple de déroulement du Cron}]{
+    hlines = {0.5pt,chambray},
+    vlines = {0.5pt,chambray},
+    colsep=4pt,
+    rowsep=4pt,
+    colspec={Q[l]Q[l]X[l]},
+    rowspec={Q[m] Q[m] Q[m] Q[m] Q[m]},
+}
+\textbf{Scan} & 
+\textbf{Date}& 
+\textbf{Documents à traiter}\\
+1 & 03/02/2021 10:00:00 & Tout dépôt entre 03/02/2021 08:00:00 et 03/02/2021 10:00:00\\
+2 & 03/02/2021 12:00:00	& Tout dépôt entre 03/02/2021 10:00:00 et 03/02/2021 12:00:00\\
+3 & 03/02/2021 14:00:00	& Tout dépôt entre 03/02/2021 12:00:00 et 03/02/2021 14:00:00\\
+...	& ... & ...
+\end{longtblr}
+La récupération des données est faite à l'aide de la méthode \lstinline|getLastPushedFiles(Date lastDateScan, int indexStart, int count, Client client)|. Cette méthode permet de récupérer un nombre défini de dépôts émis dans un intervalle de temps donné.
+
+\begin{longtblr}[caption={Description des paramètres de la fonction \lstinline|getLastPushedFiles|}]{
+    hlines = {0.5pt,chambray},
+    vlines = {0.5pt,chambray},
+    colsep=4pt,
+    rowsep=4pt,
+    colspec={Q[l]X[l]},
+    rowspec={Q[m] Q[m] Q[m] Q[m] Q[m]},
+}
+\textbf{Paramètre} & 
+\textbf{Description}\\
+lastDateScan & c'est la date du dernier scan enregistré dans la table \lstinline|GED_BATCH_SCAN_UPLOAD_DOC|\\
+indexStart & permet de spécifier l'indice du premier élément du lot\\
+count & permet de spécifier la taille du lot\\
+client & le nom du client (toujours "arkevia")\\
+\end{longtblr}
+Le fonctionnement dernière consiste à:
+\begin{itemize}
+    \item Construire les critères de recherche.
+    \item Appeler la méthode \lstinline|findDocumentByCriteria| du service \lstinline|GedService|.
+    \item Interroger l'API SignArchive au moyen d'une requête Solr.
+\end{itemize}
+\subsubsubsection*{Traitement de données}
+Une boucle explore chaque document de la façon suivante :
+\newpage
+\begin{lstlisting}[numbers=none]
+do {Traitement}
+while (totalPageNumber > pageIndex)
+// totalPageNumber : nombre total des documents divisé par 20
+// pageIndex : nombre des lots traités
+\end{lstlisting}
+\textbf{Traitement :}
+\begin{itemize}
+    \item Vérifier la validité du matricule et de son propriétaire. 
+    \item Rechercher l'utilisateur lié à ce matricule et récupérer son adresse mail.
+    \item Vérifier s'il y a déjà une notification envoyé vers cet utilisateur pour ce document - les notifications sont persistés dans la table \lstinline|DocumentUploadNotification|.
+    \item Préparer un nouveau objet de notification avec les informations (date, id du document, id de l'utilisateur, etc.).
+    \item Persister cet objet dans la base de données et l'ajouter dans une file d'attente (sans envoyer la notification immédiatement).\\
+\end{itemize}
+Le schéma suivant (figure \ref{fig:seq}) illustre l'approche employée pour traiter ces lots de données :
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=\linewidth]{images/sec4/seq.pdf}
+        \caption{Diagramme de séquence modélisant le processus d'envoi de notifications}
+        \label{fig:seq}
+    \end{center}
+\end{figure}
+\subsubsubsection*{Problématique et limites}
+\begin{itemize}
+    \item Mauvaise gestion des indices de recherche pour la méthode \lstinline|getLastPushedFiles|, ce qui conduit à boucler sur les documents déjà traités, et par conséquent à dépenser plus de ressources et de temps.\\
+
+    \item L'appel Solr est couteuse en terme de temps, l'ancien mécanisme sollicite Solr pour chaque 20 documents (c'est-à-dire, si on a 1000 documents $\Longrightarrow$ on doit le solliciter 50 fois). 
+    
+    \item La réponse de Solr ne parvient pas à distinguer les clients migrés des clients non migrés, et l'ancien mécanisme prend en compte tous les documents, y compris ceux des clients qui n'ont pas encore migré. Le traitement de documents non pertinents exige un temps considérable.
+\end{itemize}
+\subsubsubsection*{La nouvelle approche}
+Le système nouvellement conçu est une application autonome indépendante de l'application mère Arkevia, créée avec Spring Boot, une technologie qui facilite le développement d'applications basées sur Spring, et le framework Spring Batch pour orchestrer le traitement des notifications. Cela n'aurait pas été concevable sans recourir à des paradigmes de programmation avancés tels que le multithreading, qui permet la gestion et l'exécution d'un grand nombre d'instances de manière concurrente, ainsi que les concepts d'inversion de contrôle et d'injection de dépendances, qui facilitent la coordination et le contrôle de l'activité de l'application. Enfin, ce mécanisme a engendré des changements majeurs dans le processus d'extraction et l'exploitation des données, que nous allons expliquer dans la suite de cette section.\\
+
+Le graphique suivant (voir figure \ref{fig:batch}) illustre de manière concrète la relation existant entre les différents composants impliqués dans le batcher lors de son exécution.
+\begin{beware}[title=Note : ]
+A noter que dans ce framework, lorsque l’on parle de batch on parle plus précisément de Job.
+\end{beware}
+    
+\begin{figure}[!hbt]
+    \begin{center}
+        \includegraphics[width=\linewidth]{images/sec4/batchdiagram.pdf}
+        \caption{Liens entre les divers composants impliqués dans le traitement par lots}
+        \label{fig:batch}
+    \end{center}
+\end{figure}
+\begin{itemize}
+    \item \textbf{ManagerStep} : Ce composant permet de créer des copies des instances de step de flux basées sur une clé pour distribuer les données des fichiers provenant du Partitioner, également il se base sur le composant \textbf{taskExecutor} et principalement sur la valeur de \lstinline|maxPoolsize| pour définir le nombre maximum de threads à exécuter.
+    \item \textbf{Partitioner} : est un composant qui permet de définir un ensemble de valeurs d'entrée sur une collection Map pour chacun des fichiers existants. En d'autres termes, la logique pour diviser les tâches en threads respectifs va ici.
+    \item \textbf{TaskExecutor} : est un JavaBean qui fournit une abstraction autour de l'instance \lstinline|java.util.concurrent.ThreadPoolExecutor| et l'expose en tant que Spring Bean. Grâce à ce composant, vous pouvez configurer le nombre de threads créés, le nombre de threads à conserver dans la file d'attente, le préfixe du thread, etc.
+    \item \textbf{WorkerStep} : Représente le flux d'étapes qui seront appliquées et exécutées parallèlement pour accomplir le traitement d'un fichier donné.\\
+\end{itemize}
+\clearpage
+\subsubsubsection*{Analyse du flux de données et traitement par lots}
+L'application batch est planifiée par défaut pour s'exécuter automatiquement toutes les deux heures. Une fois le Job est lancé, le composant \textbf{Partitionneur} scanne le répertoire d'entrée afin de trouver des éventuels fichiers csv à traiter ;\\
+À ce stade, il y a deux cas :
+
+\begin{enumerate}
+    \item Si le répertoire d'entrée \textbf{input} est vide, le programme scanne le répertoire \textbf{inprogress} pour vérifier s'il y a des fichiers qui ne sont pas traités correctement ou s'ils ont été interceptés lors d'une exécution antérieure ou encore bloqués pour un autre motif, dans ce contexte il y a deux hypothèses :
+    \begin{enumerate}
+        \item \underline{Le répertoire \textbf{inprogress} est vide}, dans ce cas le job se termine avec le statut \textbf{COMPLETED}.
+        \item \underline{Le répertoire \textbf{inprogress} n'est pas vide}, dans ce cas le programme reprendra les fichiers csv trouvés et les traitera une autre fois dans le cadre d'une politique de réessai établie (fixée à 3 essais maximum).
+    \end{enumerate}
+    \item Si le répertoire d'entrée contient des fichiers, le programme créera des instances du job (threads) pour traiter chaque fichier indépendamment ; le nombre de threads créés dépend de la valeur donnée au programme et du nombre de fichiers trouvés (pour altérer cette valeur, veuillez se référer à la propriété maxPoolSize dans le fichier application.properties) ; si le nombre de fichiers dépasse le nombre maximum de threads autorisés, les fichiers restants seront ajoutés à la file d'attente (dès qu'un thread sera libre, il prendra en charge un fichier dans la file d'attente).\\
+\end{enumerate}
+Pour chaque thread lancé, le programme entreprend à différentes phases d'appliquer une série de validations aux fichiers associés afin de gérer efficacement le traitement et les cas de récupération en cas d'échec :
+\begin{enumerate}
+    \item La première phase est appelée \textbf{step:CSVInProgress}, elle permet de déplacer le fichier courant vers le répertoire \textbf{inprogress}, pour commencer son traitement.
+    \item La phase successive est celle du traitement des fichiers csv, elle constitue le cœur du processus batch et c'est dans cette phase que s'effectuent la lecture, la validation et la transformation des données, et finalement l'envoi des emails pour les données approuvées.
+    \item Au terme de la deuxième phase, si le traitement du fichier s'est déroulé avec succès, le fichier sera acheminé à la dernière phase qui est celle de l'archivage du fichier. Dans le cas contraire, le fichier sera ignoré jusqu'à ce que le batch finisse le traitement des fichiers existants dans le répertoire d'entrée \textbf{input}, puis il le reprit ensuite pour un second traitement (fixée à trois tentatives maximum).\\
+    \item Tout fichier ayant atteint ce stade d'archivage signifie que le fichier a été traité avec succès et il sera simplement déplacé vers le répertoire \textbf{done} et renommé selon le format suivant file\_name@date\_processing.csv.
+    \item A la fin du job, un email de contrôle incluant le statut de la dernière exécution, le nombre d'emails envoyés par client, ainsi qu'un fichier excel contenant la liste des utilisateurs auxquels l'email de notification n'a pas été expédié, sera envoyé au responsable.
+\end{enumerate}
+\addcontentsline{toc}{subsection}{Conclusion}
+\subsection*{Conclusion}
 %%%%%%%%%%%%%%%%%%

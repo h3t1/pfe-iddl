@@ -72,7 +72,7 @@ jQuery est une bibliothèque JavaScript libre créée pour faciliter l'écriture
  \\\textbf{Sass}
  }
  & Sass (Syntactically Awesome Style Sheets) est une extension de CSS intégrant des fonctionnalités telles que les règles imbriquées, les variables, les mixins et les extensions de classe. Cela permet aux développeurs d'écrire des CSS structurés, lisibles et réutilisables. Sass est compilé en CSS standard. Il s'agit principalement d'un langage de préprocesseur CSS qui accepte à la fois le CSS et sa syntaxe personnalisée d'écriture de codes de conception visuelle.\\
-{\includegraphics[width=8mm]{images/vuejs.png} \\\textbf{VueJs}
+{\includegraphics[width=8mm]{images/sec5/vue.pdf} \\\textbf{VueJs}
 } & Vue (prononcé /vju:/, comme le terme anglais view) est un framework évolutif pour construire des interfaces utilisateur. À la différence des autres frameworks monolithiques, Vue a été conçu et pensé pour pouvoir être adopté de manière incrémentale. Le cœur de la bibliothèque se concentre uniquement sur la partie front-end. D’un autre côté, Vue est tout à fait capable de faire tourner des applications web mono-pages quand il est couplé avec des outils modernes et des bibliothèques complémentaires.\\
 \end{longtblr}
 
@@ -220,7 +220,7 @@ En pratique, les cas d'utilisation les plus courants de JIRA sont les suivants 
 {\includegraphics[height=8mm]{images/sec5/wildfly.pdf} \\\textbf{WildFly}
 } & WildFly, anciennement connu sous le nom de JBoss Application Server, est un serveur d'applications open source (LGPL), développé par Redhat, pouvant être utilisé sur tout système d'exploitation fournissant une machine virtuelle Java (JVM). \\
 {\includegraphics[height=4.5mm]{images/sec5/zoom.pdf} \\\textbf{Zoom}
-} & La crise sanitaire et la généralisation du télétravail ont largement encouragé l'adoption des outils de de visio-conférence. L'un de ces outils est Zoom, qui est essentiellement un outil permettant aux professionnels de mener facilement des visio-conférences et des réunions en ligne, ainsi que d'échanger des messages, des documents, des images, des vidéos et d'autres types de données avec les participants d'un un groupe de discussion.\\
+} & La crise sanitaire et la généralisation du télétravail ont largement encouragé l'adoption des outils de visio-conférence. L'un de ces outils est Zoom, qui est essentiellement un outil permettant aux professionnels de mener facilement des visio-conférences et des réunions en ligne, ainsi que d'échanger des messages, des documents, des images, des vidéos et d'autres types de données avec les participants d'un groupe de discussion.\\
 \end{longtblr}
 \subsubsection{Outils utilisés pour la réalisation de ce rapport}
 Adobe Illustrator
@@ -228,11 +228,32 @@ Draw.io
 LaTeX
 Figma
 Vs code
-\subsection{Test et paramétrage du mécanisme d'envoi de notifications}
+\subsection{Démonstration de la fiabilité du nouveau système d'envoi de notifications}
+Le traitement par lot, communément appelé Batch dans le jargon informatique, est une problématique très répandue et quasiment incontournable au sein des entreprises et industries qui manipulent d’énormes masses de données. Dans cette section, nous allons vous présenter à travers un exemple d’application, la technologie Spring Batch/Spring Boot permettant de répondre à ce type de besoin.
+\subsubsection{Préparation de l'environnement et paramétrage du système}
+Afin de préparer la démonstration, nous commencerons par la mise en place de l'environnement d'exécution :
+\begin{enumerate}
+    \item Établir les données d'entrée : À ce stade, et pour des fins de test, nous allons générer systématiquement quatre fichiers CSV de taille aléatoire. Ces fichiers sont composés de 3 champs :
+    \begin{itemize}
+        \item \textbf{Le matricule} : valeur numérique servant à identifier le salarié.
+        \item \textbf{Le code client} : valeur alphanumérique désignée comme identifiant du client (société).
+        \item Le idTech : valeur alphanumérique sert comme identifiant de document.
+    \end{itemize}
+    \item Créez trois répertoires nommés respectivement "input", "inprogress", et "done".
+    \item Déplacez les fichiers CSV préalablement créés vers le répertoire "input" (ou "inprogress") afin de les traiter avec le batcher.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.45\linewidth]{images/sec5/folders.pdf}
+    \end{figure}
+    \item Assurer que le fichier properties pointe sur le chemin du repertoire input
+\end{enumerate}
+L'application réalisée est menée par un fichier de propriétés. ce fichier permet de \dots
+parmi les proprité
+\subsubsection{Exécution, résultats et interprétation}
 \subsubsection{Tests unitaires}
-\subsubsection{Paramétrage du système}
-\subsection{Démonstration}
-Le traitement par lot, communément appelé Batch dans le jargon informatique, est une problématique très répandue et quasiment incontournable au sein des entreprises et industries qui manipulent d'énormes masses de données. Dans cette section, nous allons vous présenter au travers d'un exemple d'application, la technologie Spring Batch/Spring Boot permettant de répondre à ce type de besoin. Cet article ne se veut pas et ne peut pas être exhaustif, car il s'agit d'une technologie immensément vaste. Mais les différents concepts présentés dans ce cours sont suffisants pour son appropriation.
+\subsubsection{Audit de code}
+\subsubsection{Benchmark}
+\subsubsection{Synthèse}
 \addcontentsline{toc}{subsection}{Conclusion}
 \subsection*{Conclusion}
 %%%%%%%%%%%%%%%%%%
