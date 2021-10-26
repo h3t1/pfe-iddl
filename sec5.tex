@@ -134,11 +134,11 @@ Le coffre-fort Arkevia est un espace de stockage sécurisé qui repose sur la te
     \item L'intégrité des documents, au moyen d’une fonction de signature électronique.
     \item La confidentialité des documents, au moyen d’une fonction de chiffrement de données.
     \item La traçabilité des actions effectuées (dépôts, restitutions, demandes de copies, etc.).
-    \item Les documents ont ainsi une valeur probante(juridiquement opposable).\\
+    \item Les documents ont ainsi une valeur probante (juridiquement opposable).\\
 \end{itemize}
 \begin{itemize}[leftmargin=*]
     \item[\textcolor{green5!30!white}{\faCheckCircleO}] Le dépôt ou l'extraction de fichiers ne peut se faire qu'à partir de l'application ARKEVIA, via les Web Services avec authentification SSL Client/Serveur.
-    \item[\textcolor{green5!30!white}{\faCheckCircleO}] Les fichiers sont horodatés, signés, chiffrés et stockés dans un espace sécurisé du Datacenter de Cegedim.\newpage
+    \item[\textcolor{green5!30!white}{\faCheckCircleO}] Les fichiers sont horodatés, signés, chiffrés et stockés dans un espace sécurisé du Datacenter de Cegedim.
     \item[\textcolor{green5!30!white}{\faCheckCircleO}] Le contenu est chiffré avec l'algorithme AES 128 GCM, la clé appartient à Cegedim. Le chiffrement des flux est sécurisé en HTTPS / TLS 1.2 (AES 256) avec un certificat SHA-256 appartenant à Cegedim.
     \item[\textcolor{green5!30!white}{\faCheckCircleO}] Les mots de passe des utilisateurs sont protégés par « hashage » via l'algorithme SHA-256.
 \end{itemize}
@@ -222,12 +222,6 @@ En pratique, les cas d'utilisation les plus courants de JIRA sont les suivants 
 {\includegraphics[height=4.5mm]{images/sec5/zoom.pdf} \\\textbf{Zoom}
 } & La crise sanitaire et la généralisation du télétravail ont largement encouragé l'adoption des outils de visio-conférence. L'un de ces outils est Zoom, qui est essentiellement un outil permettant aux professionnels de mener facilement des visio-conférences et des réunions en ligne, ainsi que d'échanger des messages, des documents, des images, des vidéos et d'autres types de données avec les participants d'un groupe de discussion.\\
 \end{longtblr}
-\subsubsection{Outils utilisés pour la réalisation de ce rapport}
-Adobe Illustrator
-Draw.io
-LaTeX
-Figma
-Vs code
 \subsection{Démonstration de la fiabilité du nouveau système d'envoi de notifications}
 Le traitement par lot, communément appelé Batch dans le jargon informatique, est une problématique très répandue et quasiment incontournable au sein des entreprises et industries qui manipulent d’énormes masses de données. Dans cette section, nous allons vous présenter à travers un exemple d’application, la technologie Spring Batch/Spring Boot permettant de répondre à ce type de besoin.
 \subsubsection{Préparation de l'environnement et paramétrage du système}
@@ -235,25 +229,137 @@ Afin de préparer la démonstration, nous commencerons par la mise en place de l
 \begin{enumerate}
     \item Établir les données d'entrée : À ce stade, et pour des fins de test, nous allons générer systématiquement quatre fichiers CSV de taille aléatoire. Ces fichiers sont composés de 3 champs :
     \begin{itemize}
-        \item \textbf{Le matricule} : valeur numérique servant à identifier le salarié.
-        \item \textbf{Le code client} : valeur alphanumérique désignée comme identifiant du client (société).
-        \item Le idTech : valeur alphanumérique sert comme identifiant de document.
+        \item \textbf{Le matricule} : valeur numérique servant comme identifiant du salarié.
+        \item \textbf{Le code client} : valeur alphanumérique servant comme identifiant du client (société).
+        \item \textbf{Le IdTech} : valeur alphanumérique servant pour identifier le document déposé.
     \end{itemize}
-    \item Créez trois répertoires nommés respectivement "input", "inprogress", et "done".
-    \item Déplacez les fichiers CSV préalablement créés vers le répertoire "input" (ou "inprogress") afin de les traiter avec le batcher.
+    \newpage
+    Exemple :
+    \begin{longtblr}[caption={Exemple de fichiers CSV générés pour le test}]{
+        hlines = {0.25pt,azure6},
+        vlines = {0.25pt,azure6},
+        colsep=4pt,
+        rowsep=4pt,
+        colspec={XXX},
+    }
+     \textbf{Matricule}&\textbf{CodeClient}&\textbf{IdTech}\\
+    1&CLIENT1&id\_tech\_0jeG8Y\\
+    2&CLIENT1&id\_tech\_J99qYD\\
+    3&CLIENT1&id\_tech\_8OHcGQ\\
+    ...&...&...\\
+    100&CLIENT1&id\_tech\_wG1X7C
+    \end{longtblr}
+    \item Créez trois répertoires portant comme noms "input", "inprogress" et "done".
+    \item Déplacez les fichiers CSV préalablement créés dans le répertoire \directory{input} afin de les traiter avec le batcher.
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.45\linewidth]{images/sec5/folders.pdf}
     \end{figure}
-    \item Assurer que le fichier properties pointe sur le chemin du repertoire input
+    \item Assurez-vous que les propriétés \lstinline|folder.input|, \lstinline|folder.inprogress| et \lstinline|folder.done| pointent vers les chemins corrects pour les répertoires \directory{input}, \directory{inprogress} et \directory{done}, respectivement. Pour ce faire, allez consulter le fichier \directory{src/main/ resources/application.properties} et vérifiez les paramètres suivants :\\
+\begin{lstlisting}[numbers=none]
+folder.input = C:/arkeviavars/input/
+folder.inprogress = C:/arkeviavars/inprogress/
+folder.done = C:/arkeviavars/done/
+\end{lstlisting}
+\newpage
+\item Vérifiez également d'autres configurations telles que le nombre maximum de threads pouvant être lancés concurremment sur une même exécution ou encore la possibilité d'activer/désactiver le mode de supervision permettant d'envoyer au gestionnaire un rapport détaillé sur l'exécution de chaque fichier abordé. Pour cette manipulation, nous allons activer le mode de supervision, ainsi que spécifier une valeur maximale pour les threads concurrents.\\
+\begin{lstlisting}[numbers=none, deletekeywords={true}]
+arkevia.monitoring.email = hamza.talaghzi@cegedim-srh.com
+mode.monitoring = true
+task_executor.core_pool_size = 10
+\end{lstlisting}
 \end{enumerate}
-L'application réalisée est menée par un fichier de propriétés. ce fichier permet de \dots
-parmi les proprité
-\subsubsection{Exécution, résultats et interprétation}
+\subsubsection{Exécution, résultats et interprétations}
+\begin{enumerate}
+    \item Ouvrez une invite de commande et rendez-vous à la racine du projet.
+    \item Afin de rendre la commande \lstinline|mvn| opérationnelle, la variable d'environnement \lstinline|JAVA_HOME| doit pointer vers le répertoire d'installation du JDK \directory{jdk-11.0.X} :\\Entrez \lstinline|set JAVA_HOME =| suivi du chemin du répertoire d'installation JDK et appuyez sur \keys{\return}.
+    \item Entrez \lstinline|mvn spring-boot:run| et appuyez sur \keys{\return}.
+    \item Lorsque vous exécuterez la commande, vous obtiendrez quelque chose qui ressemble à ceci :\\
+\end{enumerate}
+\begin{lstlisting}[style=DOS,numbers=left,language=tex, deletekeywords={for,source,test}, morekeywords={certains, logs, sont, omis, par, souci, de, concision}]
+    .   ____          _            __ _ _
+   /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+  ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+   \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+    '  |____| .__|_| |_|_| |_\__, | / / / /
+   =========|_|==============|___/=/_/_/_/
+   :: Spring Boot ::                (v2.5.0)
+
+   ---- certains logs sont omis par souci de concision ----
+
+[   scheduling-1] o.s.b.c.l.s.SimpleJobLauncher            : Job: [SimpleJob: [name=notification-manager]] launched with the following parameters: [{supportedClientKeys=SMART;DEMO;CGW;TEST, @=1634983159017}]
+[   scheduling-1] c.c.s.n.b.l.JobListener                  : Starting job...
+[   scheduling-1] o.s.b.c.j.SimpleStepHandler              : Executing step: [partitionStep]
+[ notif@thread-2] o.s.b.c.j.SimpleStepHandler              : Executing step: [csv-inprogress]
+[ notif@thread-3] o.s.b.c.j.SimpleStepHandler              : Executing step: [csv-inprogress]
+[ notif@thread-4] o.s.b.c.j.SimpleStepHandler              : Executing step: [csv-inprogress]
+[ notif@thread-1] o.s.b.c.j.SimpleStepHandler              : Executing step: [csv-inprogress]
+[ notif@thread-2] o.s.b.c.s.AbstractStep                   : Step: [csv-inprogress] executed in 482ms
+[ notif@thread-4] o.s.b.c.s.AbstractStep                   : Step: [csv-inprogress] executed in 476ms
+[ notif@thread-3] o.s.b.c.s.AbstractStep                   : Step: [csv-inprogress] executed in 477ms
+[ notif@thread-1] o.s.b.c.s.AbstractStep                   : Step: [csv-inprogress] executed in 474ms
+[ notif@thread-2] o.s.b.c.j.SimpleStepHandler              : Executing step: [csv-processor]
+[ notif@thread-4] o.s.b.c.j.SimpleStepHandler              : Executing step: [csv-processor]
+[ notif@thread-3] o.s.b.c.j.SimpleStepHandler              : Executing step: [csv-processor]
+[ notif@thread-1] o.s.b.c.j.SimpleStepHandler              : Executing step: [csv-processor]
+[ notif@thread-2] c.c.s.n.b.BatchConfiguration             : Reading file : C:/arkeviavars/inprogress/client4.csv
+[ notif@thread-4] c.c.s.n.b.BatchConfiguration             : Reading file : C:/arkeviavars/inprogress/client3.csv
+[ notif@thread-3] c.c.s.n.b.BatchConfiguration             : Reading file : C:/arkeviavars/inprogress/client1.csv
+[ notif@thread-1] c.c.s.n.b.BatchConfiguration             : Reading file : C:/arkeviavars/inprogress/client2.csv
+[ notif@thread-1] o.s.b.c.s.AbstractStep                   : Step: [csv-processor] executed in 963ms
+[ notif@thread-1] o.s.b.c.j.SimpleStepHandler              : Executing step: [csv-archiver]
+[ notif@thread-1] o.s.b.c.s.AbstractStep                   : Step: [csv-archiver] executed in 476ms
+[ notif@thread-1] o.s.b.c.s.AbstractStep                   : Step: [slaveFlow:file1] executed in 4s240ms
+[ notif@thread-2] o.s.b.c.s.AbstractStep                   : Step: [csv-processor] executed in 6s45ms
+[ notif@thread-2] o.s.b.c.j.SimpleStepHandler              : Duplicate step [csv-archiver] detected in execution of job=[notification-manager]. If either step fails, both will be executed again on restart.
+[ notif@thread-2] o.s.b.c.j.SimpleStepHandler              : Executing step: [csv-archiver]
+[ notif@thread-2] o.s.b.c.s.AbstractStep                   : Step: [csv-archiver] executed in 474ms
+[ notif@thread-2] o.s.b.c.s.AbstractStep                   : Step: [slaveFlow:file3] executed in 9s382ms
+[ notif@thread-4] o.s.b.c.s.AbstractStep                   : Step: [csv-processor] executed in 13s281ms
+[ notif@thread-3] o.s.b.c.s.AbstractStep                   : Step: [csv-processor] executed in 13s278ms
+[ notif@thread-4] o.s.b.c.j.SimpleStepHandler              : Duplicate step [csv-archiver] detected in execution of job=[notification-manager]. If either step fails, both will be executed again on restart.
+[ notif@thread-4] o.s.b.c.j.SimpleStepHandler              : Executing step: [csv-archiver]
+[ notif@thread-3] o.s.b.c.j.SimpleStepHandler              : Duplicate step [csv-archiver] detected in execution of job=[notification-manager]. If either step fails, both will be executed again on restart.
+[ notif@thread-3] o.s.b.c.j.SimpleStepHandler              : Executing step: [csv-archiver]
+[ notif@thread-4] o.s.b.c.s.AbstractStep                   : Step: [csv-archiver] executed in 482ms
+[ notif@thread-3] o.s.b.c.s.AbstractStep                   : Step: [csv-archiver] executed in 476ms
+[ notif@thread-4] o.s.b.c.s.AbstractStep                   : Step: [slaveFlow:file2] executed in 16s647ms
+[ notif@thread-3] o.s.b.c.s.AbstractStep                   : Step: [slaveFlow:file0] executed in 16s933ms
+[   scheduling-1] o.s.b.c.s.AbstractStep                   : Step: [partitionStep] executed in 18s94ms
+[   scheduling-1] c.c.s.n.b.l.JobListener                  : Job Finished.
+\end{lstlisting}
+\subsubsubsection*{Interprétations :}
+\begin{itemize}
+    \item \textbf{Ligne 11} : Démarrage du Job, tout en chargeant certains paramètres qui seront utiles plus tard dans les étapes qui sont exécutées. Ces paramètres ne seront accessibles que dans le contexte du Job.
+    \item \textbf{Ligne 13} : Exécution de l'étape de morcellement, cette étape examine le contenu des dossiers \directory{input} et \directory{inprogress} pour déterminer le nombre de fichiers à traiter afin de déduire le nombre de threads nécessaires au traitement de ces fichiers.
+    \item \textbf{Lignes 14-17} : Comme nous avons déposé dans cette expérience quatre fichiers CSV dans le dossier \directory{input}, quatre threads ont été créés en conséquence (Les threads sont nommés selon le pattern suivant notif@thread-\textbf{id}) et cela explique pourquoi nous observons dans les logs \lstinline|Executing step : [csv-inprogress]| dupliquée 4 fois. Autrement dit, cela signifie que le batcher applique de manière simultanée la première phase du traitement des fichiers (\lstinline|csv-inprogress|).
+    \item \textbf{Lignes 18-21} : Ces logs indiquent que la première phase de traitement des fichiers est terminée.
+    \item \textbf{Lignes 22-25} : Ces logs annoncent le début d'une nouvelle phase de traitement des fichiers CSV. Il s'agit de la phase de traitement CSV, qui concrétise le traitement effectif du batch. C'est dans cette étape que s'effectuent la lecture, la validation et la transformation des données, et enfin l'envoi des emails pour les données approuvées.
+    \item \textbf{Lignes 23-48} : Ces logs exposent les différentes phases par lesquelles transite chaque fichier, à ce stade vous allez sûrement remarquer qu'il y a des threads qui ont pu passer plus rapidement les étapes et terminer tout le processus avant les autres, et cela est dû au fait que chaque fichier a une taille différente et donc des délais d'exécution différents.
+    \item \textbf{Ligne 49} : Cette ligne révèle le temps d'exécution total écoulé lors du traitement des fichiers, qui est de 18s94ms. 
+    \item \textbf{Ligne 50} : Fin du Job. 
+\end{itemize}
+Au terme de cette exécution, le superviseur recevra des mails récapitulatifs sur le statut de traitement de chaque fichier. (voir figure \ref{fig:monitoring_mail}).
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{images/sec5/monitoring_mail.png}
+    \caption{Exemple d'alerte envoyée au superviseur}
+    \label{fig:monitoring_mail}
+\end{figure}
+Par ailleurs, les utilisateurs concernés par les notifications recevront un mail générique les informant du dépôt (voir figure \ref{fig:notification_mail}).
+\begin{figure}[H]
+    \includegraphics[width=0.95\linewidth]{images/sec5/notification_mail.png}
+    \caption{Modèle générique de mail pour l'envoi de notifications}
+    \label{fig:notification_mail}
+\end{figure}
 \subsubsection{Tests unitaires}
+Pour lancer les tests unitaires crées lors de l'application
 \subsubsection{Audit de code}
-\subsubsection{Benchmark}
+La vérification d'un ensemble de règles de programmation est généralement faite lors d'une revue de code ou bien d'un audit de code, manuellement ou bien automatiquement afin de trouver les violations de règles de programmation, dans le but de les corriger.
+\subsubsection{Pseudo-Benchmark}
 \subsubsection{Synthèse}
 \addcontentsline{toc}{subsection}{Conclusion}
 \subsection*{Conclusion}
+Dans ce chapitre, nous avons essayé d'exposer une démo sur l'un des travaux réalisés de refonte, à savoir le système de la refonte. Dans cette démo, nous avons essayé d'exposer  système final réalisé tout en précisant le processus suivi partant de la configuration, l'exécution, l'audit du code et les tests.
+En fait, nous avons réalisé l'implémentation en respectant la conception élaborée et les pratiques préconisées.
+Enfin, avec ce chapitre, nous terminons la phase de réalisation.
 %%%%%%%%%%%%%%%%%%

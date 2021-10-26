@@ -155,7 +155,7 @@
   keywordstyle=\color{keywordColor}\bfseries,
   commentstyle=\markupComments,
   stringstyle=\color{stringColor},
-  numberstyle=\color{lineNumberColor}\lstfontfamily,
+  numberstyle=\color{lineNumberColor},
   morecomment=[s][\markupJavadocs]{/**}{*/}, % For Javadoc comments
   showstringspaces=false,
   numbers=left
@@ -200,11 +200,10 @@
   numbers=left,
   frame=lrtb,
   captionpos=b,
-  breaklines=true,
-  postbreak=\usebox\lstcustomredarrow,% 
+  %breaklines=true,
+  %postbreak=\usebox\lstcustomredarrow,% 
   % Add additional keywords here
   morekeywords={ enum, strictfp },
   escapeinside={(*@}{@*)} 
 }
-
 \expandafter\lstset\expandafter{\jAnnotations}

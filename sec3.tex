@@ -5,7 +5,7 @@
 \section{Méthodologie de gestion de projets}
 \addcontentsline{toc}{subsection}{Introduction}
 \subsection*{Introduction}
-Dans ce chapitre, nous aborderons les aspects de la gestion de projet, de la composition des équipes, des outils et des méthodes de développement de logiciels.
+Dans ce chapitre, nous aborderons les aspects de la gestion de projet, de la composition des équipes, des outils et des méthodes de développement de logiciels adoptés par Cegedim SRH.
 \subsection{Étude préliminaire}
 \subsubsection{Origine du génie logiciel}
 \begin{beware}[title=Définition : ]
@@ -25,7 +25,7 @@ En 1975 s'est tenue la première conférence véritablement dédiée à l’ense
 \subsubsubsection{Les approches traditionnelles}
 Dans une approche traditionnelle, le cycle de vie d'un logiciel passe par quatre phases principales : \textbf{initiation}, \textbf{développement}, \textbf{déploiement} et \textbf{exploitation}.\\
 \textbf{L'initiation} vise à déterminer la mission du système et à effectuer des travaux exploratoires permettant de vérifier la pertinence du projet. \textbf{Le développement} est la phase qui prend en charge la réalisation du logiciel. Elle précise les besoins, réalise le produit et valide son fonctionnement. \textbf{Le déploiement} rend le produit accessible à ses utilisateurs, par la mise en service du logiciel dans son environnement de production. \textbf{L’exploitation} est la période de vie utile du produit au cours de laquelle des améliorations peuvent être apportées au produit. 
-Un ensemble d’éléments est nécessaire à un projet conduit par une approche traditionnelle. 
+% Un ensemble d’éléments est nécessaire à un projet conduit par une approche traditionnelle. 
 % La table ~\ref{tab:trad} résume les phases et les principales tâches qu’elles regroupent.
 
 % \begin{longtblr}[caption={Description des étapes du cycle de vie logiciel dans une apporche traditionnelle},label={tab:trad}]{
@@ -329,8 +329,13 @@ Compte tenu de la diversité des applications développées par Cegedim SRH et a
     \item \textbf{\underline{Découpage et chiffrage}} : Il s'agit d'établir la liste des tâches en associant les besoins et les coûts correspondants, tout en incluant les sous-tâches et les tâches induites par la réalisation afin de chiffrer au plus juste le projet.
     \item \textbf{\underline{Planification}} : La planification vise à ordonner les tâches et à indiquer leur enchaînement logique en tenant compte des ressources disponibles et de leur charge de travail maximale.
     \item \textbf{\underline{Codage}} : La phase de codage, également appelée programmation, consiste à traduire en code les fonctionnalités et les exigences techniques préalablement définies.
-    \item \textbf{\underline{Test unitaires}} : 
-    \item \textbf{\underline{Audit de code}} : L'étape d'audit de code permet de s’assurer que la programmation est de qualité, en vérifiant que chaque module ou sous-ensemble de la solution informatique est conforme normes de codage définie par Cegedim SRH.
+    \item \textbf{\underline{Tests unitaires}} : Le concept de test unitaire n'est pas un élément nouveau. Depuis les prémices de l'informatique, les tests font partie de l'activité quotidienne d'un développeur. Ce qui est nouveau aujourd'hui, c'est que cette activité, notamment les tests unitaires, est placée au cœur du processus de conception. En effet, un test unitaire permet de valider la conformité de chaque composant logiciel pris comme une unité par rapport à sa spécification détaillée. Autrement dit, un scénario de test unitaire ressemble à une expérience scientifique dans laquelle une hypothèse est examinée en fonction de trois éléments clés :
+    \begin{enumerate}
+        \item Les données en entrée. 
+        \item L'objet à tester. 
+        \item Les observations attendues.
+    \end{enumerate}
+    \item \textbf{\underline{Audit de code}} : L'étape d'audit de code permet de s'assurer de la qualité du codage en vérifiant que chaque module ou sous-ensemble de la solution informatique est conforme aux règles et bonnes pratiques de développement logiciel. Dans le cadre de ce sujet, nous nous référerons plus particulièrement aux règles établies par Cegedim SRH (voir la checklist \ref{sec:checklist} en annexe) dans le but de systématiser les bonnes pratiques et d'éviter les erreurs classiques de développement au sein des équipes de dév.
     \item \textbf{\underline{Recette}} La phase de recette est le processus de validation par l'équipe de validation et acceptance (QA) de la conformité des livrables avec les spécifications initiales.
     \item \textbf{\underline{Documentation}} : À l’issue de la recette, une documentation de projet est produite afin de rassembler les informations nécessaires à l’utilisation de la solution informatique et en vue de ses développements ultérieurs.
     \item \textbf{\underline{Déploiement}} : Une fois le projet qualifié, la solution informatique peut être déployée : il s’agit de la livraison du produit final et de sa mise en service.
@@ -353,4 +358,9 @@ La figure suivante détaille la planification prévisionnelle du projet (voir fi
 
 \subsection*{Conclusion}
 \addcontentsline{toc}{subsection}{Conclusion}
+La gestion de projets comme l’on peut le constater s’avère être d’une grande nécessité. Il est nécessaire pour mener à bien un projet de prendre en compte plusieurs dimensions dont toutes ne sont pas forcément quantifiables.\\
+
+Cegedim SRH adopte désormais la méthode Scrum, l'une des méthodes Agile les plus répandues, pour le développement de ses propres solutions. L'Agilité, résolument basée sur l'efficacité et la création de valeur ajoutée, place véritablement clients et éditeurs dans un mode collaboratif avec comme vision un objectif commun.\\
+
+En conséquence, grâce à son expertise avérée de cette méthodologie. Cegedim SRH a pu réduire les délais de conception et de production sans pour autant compromettre la qualité du produit final.
 %%%%%%%%%%%%%%%%%%

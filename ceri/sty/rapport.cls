@@ -22,6 +22,8 @@
 \usepackage{stackengine}
 \usepackage{xparse}
 \usepackage{appendix}
+\usepackage{menukeys}
+\renewmenumacro{\directory}{pathswithfolder}
 %\RequirePackage{luatextra}				    % same, but for LuaLaTex instead of PDFlatex
 %    \defaultfontfeatures{Ligatures=TeX}     % for ligatures in LuaLaTex (may slow down the compilation)
 %\RequirePackage[utf8]{inputenc}			% use source file containing diacritics (not necessary for LuaLaTeX or XeLaTeX)
@@ -544,8 +546,15 @@
 }
 % this is just to be able to mention the listings environments... in latex listings environments
 \lstnewenvironment{TeXlstlisting}{\lstset{language=Java,numbers=none}}{}
-
 \RequirePackage{ceri/sty/lstcustom}
+\lstdefinestyle{DOS}
+{
+    backgroundcolor=\color{white!90!gray},
+    basicstyle=\scriptsize\color{gray1},
+	keywordstyle=\color{blue},
+	stringstyle=\color{gray1},
+	rulecolor=\color{gray},	
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % typewriter-type environments
 \RequirePackage{framed}

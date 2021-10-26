@@ -720,7 +720,7 @@ A noter que dans ce framework, lorsque l’on parle de batch on parle plus préc
 \end{figure}
 \begin{itemize}
     \item \textbf{ManagerStep} : Ce composant permet de créer des copies des instances de step de flux basées sur une clé pour distribuer les données des fichiers provenant du Partitioner, également il se base sur le composant \textbf{taskExecutor} et principalement sur la valeur de \lstinline|maxPoolsize| pour définir le nombre maximum de threads à exécuter.
-    \item \textbf{Partitioner} : est un composant qui permet de définir un ensemble de valeurs d'entrée sur une collection Map pour chacun des fichiers existants. En d'autres termes, la logique pour diviser les tâches en threads respectifs va ici.
+    \item \textbf{Partitioner} : est un composant qui permet de définir un ensemble de valeurs d'entrée sur une collection \lstinline|Map| pour chacun des fichiers existants. En d'autres termes, la logique pour diviser les tâches en threads respectifs va ici.
     \item \textbf{TaskExecutor} : est un JavaBean qui fournit une abstraction autour de l'instance \lstinline|java.util.concurrent.ThreadPoolExecutor| et l'expose en tant que Spring Bean. Grâce à ce composant, vous pouvez configurer le nombre de threads créés, le nombre de threads à conserver dans la file d'attente, le préfixe du thread, etc.
     \item \textbf{WorkerStep} : Représente le flux d'étapes qui seront appliquées et exécutées parallèlement pour accomplir le traitement d'un fichier donné.\\
 \end{itemize}
@@ -733,17 +733,17 @@ L'application batch est planifiée par défaut pour s'exécuter automatiquement 
     \item Si le répertoire d'entrée \textbf{input} est vide, le programme scanne le répertoire \textbf{inprogress} pour vérifier s'il y a des fichiers qui ne sont pas traités correctement ou s'ils ont été interceptés lors d'une exécution antérieure ou encore bloqués pour un autre motif, dans ce contexte il y a deux hypothèses :
     \begin{enumerate}
         \item \underline{Le répertoire \textbf{inprogress} est vide}, dans ce cas le job se termine avec le statut \textbf{COMPLETED}.
-        \item \underline{Le répertoire \textbf{inprogress} n'est pas vide}, dans ce cas le programme reprendra les fichiers csv trouvés et les traitera une autre fois dans le cadre d'une politique de réessai établie (fixée à 3 essais maximum).
+        \item \underline{Le répertoire \textbf{inprogress} n'est pas vide}, dans ce cas le programme reprendra les fichiers CSV trouvés et les traitera une autre fois dans le cadre d'une politique de relance établie (fixée à 3 essais maximum).
     \end{enumerate}
-    \item Si le répertoire d'entrée contient des fichiers, le programme créera des instances du job (threads) pour traiter chaque fichier indépendamment ; le nombre de threads créés dépend de la valeur donnée au programme et du nombre de fichiers trouvés (pour altérer cette valeur, veuillez se référer à la propriété maxPoolSize dans le fichier application.properties) ; si le nombre de fichiers dépasse le nombre maximum de threads autorisés, les fichiers restants seront ajoutés à la file d'attente (dès qu'un thread sera libre, il prendra en charge un fichier dans la file d'attente).\\
+    \item Si le répertoire d'entrée contient des fichiers, le programme créera des instances du Job (threads) pour traiter chaque fichier indépendamment ; le nombre de threads créés dépend de la valeur donnée au programme et du nombre de fichiers trouvés (pour altérer cette valeur, veuillez se référer à la propriété \lstinline|maxPoolSize| dans le fichier application.properties) ; si le nombre de fichiers dépasse le nombre maximum de threads autorisés, les fichiers restants seront ajoutés à la file d'attente (dès qu'un thread sera libre, il prendra en charge un fichier dans la file d'attente).\\
 \end{enumerate}
 Pour chaque thread lancé, le programme entreprend à différentes phases d'appliquer une série de validations aux fichiers associés afin de gérer efficacement le traitement et les cas de récupération en cas d'échec :
 \begin{enumerate}
     \item La première phase est appelée \textbf{step:CSVInProgress}, elle permet de déplacer le fichier courant vers le répertoire \textbf{inprogress}, pour commencer son traitement.
-    \item La phase successive est celle du traitement des fichiers csv, elle constitue le cœur du processus batch et c'est dans cette phase que s'effectuent la lecture, la validation et la transformation des données, et finalement l'envoi des emails pour les données approuvées.
+    \item La phase successive est celle du traitement des fichiers CSV, elle constitue le cœur du processus batch et c'est dans cette phase que s'effectuent la lecture, la validation et la transformation des données, et finalement l'envoi des emails pour les données approuvées.
     \item Au terme de la deuxième phase, si le traitement du fichier s'est déroulé avec succès, le fichier sera acheminé à la dernière phase qui est celle de l'archivage du fichier. Dans le cas contraire, le fichier sera ignoré jusqu'à ce que le batch finisse le traitement des fichiers existants dans le répertoire d'entrée \textbf{input}, puis il le reprit ensuite pour un second traitement (fixée à trois tentatives maximum).\\
     \item Tout fichier ayant atteint ce stade d'archivage signifie que le fichier a été traité avec succès et il sera simplement déplacé vers le répertoire \textbf{done} et renommé selon le format suivant file\_name@date\_processing.csv.
-    \item A la fin du job, un email de contrôle incluant le statut de la dernière exécution, le nombre d'emails envoyés par client, ainsi qu'un fichier excel contenant la liste des utilisateurs auxquels l'email de notification n'a pas été expédié, sera envoyé au responsable.
+    \item À la fin du Job, un email de contrôle incluant le statut de la dernière exécution, le nombre d'emails envoyés par client, ainsi qu'un fichier Excel contenant la liste des utilisateurs auxquels l'email de notification n'a pas été expédié, sera envoyé au responsable.
 \end{enumerate}
 \addcontentsline{toc}{subsection}{Conclusion}
 \subsection*{Conclusion}
