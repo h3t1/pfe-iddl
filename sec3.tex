@@ -23,8 +23,14 @@ La conférence de l'OTAN a été immédiatement suivie par de nombreuses autres 
 En 1975 s'est tenue la première conférence véritablement dédiée à l’ensemble du génie logiciel, accompagnée d'une exposition de premiers outils, notamment pour l’aide au test. Depuis, l’IEEE tient une rencontre annuelle internationale. Cette première conférence a correspondu à la création, au sein de l’IEEE, d’un comité technique dédié au génie logiciel, animateur d’une série de conférences et ateliers récurrents et éditeur de deux revues dédiées au génie logiciel\cite{origine_gl3}.
 \subsubsection{Comparaison des différentes méthodes de développement}
 \subsubsubsection{Les approches traditionnelles}
-Dans une approche traditionnelle, le cycle de vie d'un logiciel passe par quatre phases principales : \textbf{initiation}, \textbf{développement}, \textbf{déploiement} et \textbf{exploitation}.\\
-\textbf{L'initiation} vise à déterminer la mission du système et à effectuer des travaux exploratoires permettant de vérifier la pertinence du projet. \textbf{Le développement} est la phase qui prend en charge la réalisation du logiciel. Elle précise les besoins, réalise le produit et valide son fonctionnement. \textbf{Le déploiement} rend le produit accessible à ses utilisateurs, par la mise en service du logiciel dans son environnement de production. \textbf{L’exploitation} est la période de vie utile du produit au cours de laquelle des améliorations peuvent être apportées au produit. 
+Dans une approche traditionnelle, le cycle de vie d'un logiciel passe par quatre phases principales : \textbf{initiation}, \textbf{développement}, \textbf{déploiement} et \textbf{exploitation}.
+\begin{itemize}
+    \item \textbf{L'initiation} vise à déterminer la mission du système et à effectuer des travaux exploratoires permettant de vérifier la pertinence du projet.
+    \item \textbf{Le développement} est la phase qui prend en charge la réalisation du logiciel. Elle précise les besoins, réalise le produit et valide son fonctionnement.
+    \item \textbf{Le déploiement} rend le produit accessible à ses utilisateurs, par la mise en service du logiciel dans son environnement de production.
+    \item \textbf{L’exploitation} est la période de vie utile du produit au cours de laquelle des améliorations peuvent être apportées au produit.
+\end{itemize}
+
 % Un ensemble d’éléments est nécessaire à un projet conduit par une approche traditionnelle. 
 % La table ~\ref{tab:trad} résume les phases et les principales tâches qu’elles regroupent.
 
@@ -282,8 +288,8 @@ Les rituels (ou cérémonies) sont des réunions de travail et de suivi qui vien
 \begin{beware}[borderline west={5pt}{0pt}{olive3}, coltitle={olive3}, title=Note : ]
     Le Sprint Planning a lieu impérativement le premier jour du Sprint, de préférence le matin afin d'optimiser un maximum le temps de travail de l'équipe sur le Sprint.
 \end{beware}
-    \begin{beware}[title=Remarque : ]
-    A l'étape "Questions", si les développeurs ne comprennent pas ce qu'il faut faire, la User Story est replacée dans le Backlog en vue d'être détaillée plus avant par le Product Owner.
+\begin{beware}[title=Remarque : ]
+À l'étape "Questions", si les développeurs ne comprennent pas ce qu'il faut faire, la User Story est replacée dans le Backlog en vue d'être détaillée plus avant par le Product Owner.
 De même, lors du "Poker Planning", si ces derniers n'arrivent pas à se mettre d'accord sur une estimation de temps commune.
 \end{beware}
 
@@ -342,7 +348,32 @@ Compte tenu de la diversité des applications développées par Cegedim SRH et a
 \end{itemize}
 \subsubsection{Gestion du workflow git}
 Le workflow de travail pour les branches GIT choisi au niveau de Cegedim SRH est Gitflow. Git Flow est un modèle de dépôt git permettant d'améliorer les processus de développement et de mise en production d'un projet.\\
-Voici un schéma présentant l'organisation du dépôt git ainsi que les différentes interactions qu'il peut y avoir entre chaque branche :
+
+Gitflow sépare sur des branches isolées le code en cours de développement et le code validé et testé. Pour cela, il s’appuie sur la création de plusieurs branches dont le cycle de vie est bien défini. Voici une table contenant leurs noms, leurs cycles de vie et leurs fonctions (voir la table \ref{tab:gitflow}):
+\begin{longtblr}[caption={Présentation des différentes branches définies sur gitflow},label={tab:gitflow}]{
+        hlines = {0.25pt,azure6},
+        vlines = {0.25pt,azure6},
+        row{1} = {bg=azure9!10!white},
+        colsep=4pt,
+        rowsep=4pt,
+    	colspec={Q[2]Q[2]Q[2]Q[3]X[8]},
+        rowspec={Q[m] Q[m] Q[m] Q[m] Q[m] Q[m] Q[m]},
+    }
+    \textbf{Branche}&\textbf{Nombre}&\textbf{Branche d’origine}&\textbf{Durée de vie}&\textbf{Fonction}\\
+    master & Unique & & Permanente & Code stable, testé et validé potentiellement éligible pour une MEP (Mise En Production)\\
+    feature & Plusieurs & develop & Développement d'une fonctionnalité & Code en cours de développement destiné à réaliser une fonctionnalité à intégrer dans la prochaine version de l'application.\\
+    develop & Unique & master & Permanente & Code de la prochaine version de l’application. Une fois que le développement d’une fonctionnalité (feature) est fini, le code est fusionné sur cette branche.\\
+    release & Unique & develop & Recette & Branche sur laquelle on corrigera les bugs détectés pendant la phase de recette.\\
+    hotfix & Aucune / Plusieurs & master & Correction d’un bug & Branche où on fait les corrections des bugs sur le code présent sur la branche master (production).
+\end{longtblr}
+Voici un schéma présentant l'organisation du dépôt git ainsi que les différentes interactions qu'il peut y avoir entre chaque branche (voir la figure \ref{fig:gitflow}) :
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=0.8\linewidth]{images/sec3/gitflow.pdf}
+        \caption{Schéma illustrant l'interaction entre les différentes branches du flux de travail gitflow}
+        \label{fig:gitflow}
+    \end{center}
+\end{figure}
 \subsection{Planification et suivi du projet}
 La planification est parmi les phases d'avant-projet. Elle consiste non seulement à délimiter le périmètre temporel du projet, mais aussi à prévoir le déroulement des activités tout au long de la période allouée au stage.
 

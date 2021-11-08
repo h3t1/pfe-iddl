@@ -6,10 +6,9 @@
 \addcontentsline{toc}{subsection}{Introduction}
 \subsection*{Introduction}
 
-Après avoir présenté les différentes étapes de conception et la méthodologie suivie, nous présenterons dans ce chapitre les outils de développement et les différents composants logiciels et matériels, pour lesquels constituent la mise en œuvre effective des différentes tâches du sujet.
+Après avoir présenté les différentes étapes de conception et la méthodologie suivie, nous présenterons dans ce chapitre les outils de développement et les différents composants logiciels et matériels, pour lesquels constituent la mise en œuvre effective des différentes tâches du sujet.\\
 
-
-Cette section décrira les travaux complétés pendant la deuxième phase du projet et fera une démonstration des caractéristiques du mécanisme d'envoi de notification.
+Le nouveau système d'envoi des notifications fera l'objet d'une démonstration dans la deuxième partie de ce chapitre.
 \subsection{Environnements et outils}
 L'objectif de cette section est de révéler les principales technologies présentes dans Arkevia, ainsi que celles appliquées lors du développement des différentes solutions. 
 \subsubsection{Composants logiciels}
@@ -223,13 +222,55 @@ En pratique, les cas d'utilisation les plus courants de JIRA sont les suivants 
 } & La crise sanitaire et la généralisation du télétravail ont largement encouragé l'adoption des outils de visio-conférence. L'un de ces outils est Zoom, qui est essentiellement un outil permettant aux professionnels de mener facilement des visio-conférences et des réunions en ligne, ainsi que d'échanger des messages, des documents, des images, des vidéos et d'autres types de données avec les participants d'un groupe de discussion.\\
 \end{longtblr}
 \subsection{Démonstration de la fiabilité du nouveau système d'envoi de notifications}
-Le traitement par lot, communément appelé Batch dans le jargon informatique, est une problématique très répandue et quasiment incontournable au sein des entreprises et industries qui manipulent d’énormes masses de données. Dans cette section, nous allons vous présenter à travers un exemple d’application, la technologie Spring Batch/Spring Boot permettant de répondre à ce type de besoin.
+Le traitement par lot, communément appelé Batch dans le jargon informatique, est une problématique très répandue et quasiment incontournable au sein des entreprises et industries qui manipulent d’énormes masses de données. Dans cette section, nous allons vous présenter à travers un exemple d’application, la technologie Spring Batch/Spring Boot permettant de répondre à ce type de besoin.\\
+
+Le système nouvellement conçu est une application autonome indépendante de l'application mère Arkevia, créée avec Spring Boot, une technologie qui facilite le développement d'applications basées sur Spring, et le framework Spring Batch pour orchestrer le traitement des notifications. Cela n'aurait pas été concevable sans recourir à des paradigmes de programmation avancés tels que le multithreading, qui permet la gestion et l'exécution d'un grand nombre d'instances de manière concurrente, ainsi que les concepts d'inversion de contrôle et d'injection de dépendances, qui facilitent la coordination et le contrôle de l'activité de l'application. Enfin, ce mécanisme a engendré des changements majeurs dans le processus d'extraction et l'exploitation des données, que nous allons expliquer dans la suite de cette section.\\
+
+Le graphique suivant (voir figure \ref{fig:batch}) illustre de manière concrète la relation existant entre les différents composants impliqués dans le batcher lors de son exécution.
+\begin{beware}[title=Note : ]
+À noter que dans ce framework, lorsque l’on parle de batch on parle plus précisément de Job.
+\end{beware}
+    
+\begin{figure}[!hbt]
+    \begin{center}
+        \includegraphics[width=\linewidth]{images/sec4/batchdiagram.pdf}
+        \caption{Liens entre les divers composants impliqués dans le traitement par lots}
+        \label{fig:batch}
+    \end{center}
+\end{figure}
+\begin{itemize}
+    \item \textbf{ManagerStep} : Ce composant permet de créer des copies des instances de step de flux basées sur une clé pour distribuer les données des fichiers provenant du Partitioner, également il se base sur le composant \textbf{taskExecutor} et principalement sur la valeur de \lstinline|maxPoolsize| pour définir le nombre maximum de threads à exécuter.
+    \item \textbf{Partitioner} : est un composant qui permet de définir un ensemble de valeurs d'entrée sur une collection \lstinline|Map| pour chacun des fichiers existants. En d'autres termes, la logique pour diviser les tâches en threads respectifs va ici.
+    \item \textbf{TaskExecutor} : est un JavaBean qui fournit une abstraction autour de l'instance \lstinline|java.util.concurrent.ThreadPoolExecutor| et l'expose en tant que Spring Bean. Grâce à ce composant, vous pouvez configurer le nombre de threads créés, le nombre de threads à conserver dans la file d'attente, le préfixe du thread, etc.
+    \item \textbf{WorkerStep} : Représente le flux d'étapes qui seront appliquées et exécutées parallèlement pour accomplir le traitement d'un fichier donné.\\
+\end{itemize}
+\subsubsubsection*{Analyse du flux de données et traitement par lots}
+L'application batch est planifiée par défaut pour s'exécuter automatiquement toutes les deux heures. Une fois le Job est lancé, le composant \textbf{Partitionneur} scanne le répertoire d'entrée afin de trouver des éventuels fichiers csv à traiter ;\\
+À ce stade, il y a deux cas :
+
+\begin{enumerate}
+    \item Si le répertoire d'entrée \textbf{input} est vide, le programme scanne le répertoire \textbf{inprogress} pour vérifier s'il y a des fichiers qui ne sont pas traités correctement ou s'ils ont été interceptés lors d'une exécution antérieure ou encore bloqués pour un autre motif, dans ce contexte il y a deux hypothèses :
+    \begin{enumerate}
+        \item \underline{Le répertoire \textbf{inprogress} est vide}, dans ce cas le job se termine avec le statut \textbf{COMPLETED}.
+        \item \underline{Le répertoire \textbf{inprogress} n'est pas vide}, dans ce cas le programme reprendra les fichiers CSV trouvés et les traitera une autre fois dans le cadre d'une politique de relance établie (fixée à 3 essais maximum).
+    \end{enumerate}
+    \item Si le répertoire d'entrée contient des fichiers, le programme créera des instances du Job (threads) pour traiter chaque fichier indépendamment ; le nombre de threads créés dépend de la valeur donnée au programme et du nombre de fichiers trouvés (pour altérer cette valeur, veuillez se référer à la propriété \lstinline|maxPoolSize| dans le fichier application.properties) ; si le nombre de fichiers dépasse le nombre maximum de threads autorisés, les fichiers restants seront ajoutés à la file d'attente (dès qu'un thread sera libre, il prendra en charge un fichier dans la file d'attente).\\
+\end{enumerate}
+Pour chaque thread lancé, le programme entreprend à différentes phases d'appliquer une série de validations aux fichiers associés afin de gérer efficacement le traitement et les cas de récupération en cas d'échec :
+\begin{enumerate}
+    \item La première phase est appelée \textbf{step:CSVInProgress}, elle permet de déplacer le fichier courant vers le répertoire \textbf{inprogress}, pour commencer son traitement.
+    \item La phase successive est celle du traitement des fichiers CSV, elle constitue le cœur du processus batch et c'est dans cette phase que s'effectuent la lecture, la validation et la transformation des données, et finalement l'envoi des emails pour les données approuvées.
+    \item Au terme de la deuxième phase, si le traitement du fichier s'est déroulé avec succès, le fichier sera acheminé à la dernière phase qui est celle de l'archivage du fichier. Dans le cas contraire, le fichier sera ignoré jusqu'à ce que le batch finisse le traitement des fichiers existants dans le répertoire d'entrée \textbf{input}, puis il le reprit ensuite pour un second traitement (fixée à trois tentatives maximum).\\
+    \item Tout fichier ayant atteint ce stade d'archivage signifie que le fichier a été traité avec succès et il sera simplement déplacé vers le répertoire \textbf{done} et renommé selon le format suivant file\_name@date\_processing.csv.
+    \item À la fin du Job, un email de contrôle incluant le statut de la dernière exécution, le nombre d'emails envoyés par client, ainsi qu'un fichier Excel contenant la liste des utilisateurs auxquels l'email de notification n'a pas été expédié, sera envoyé au responsable.
+\end{enumerate}
+
 \subsubsection{Préparation de l'environnement et paramétrage du système}
 Afin de préparer la démonstration, nous commencerons par la mise en place de l'environnement d'exécution :
 \begin{enumerate}
     \item Établir les données d'entrée : À ce stade, et pour des fins de test, nous allons générer systématiquement quatre fichiers CSV de taille aléatoire. Ces fichiers sont composés de 3 champs :
     \begin{itemize}
-        \item \textbf{Le matricule} : valeur numérique servant comme identifiant du salarié.
+        \item \textbf{La matricule} : valeur numérique servant comme identifiant du salarié.
         \item \textbf{Le code client} : valeur alphanumérique servant comme identifiant du client (société).
         \item \textbf{Le IdTech} : valeur alphanumérique servant pour identifier le document déposé.
     \end{itemize}
@@ -335,7 +376,7 @@ task_executor.core_pool_size = 10
     \item \textbf{Lignes 14-17} : Comme nous avons déposé dans cette expérience quatre fichiers CSV dans le dossier \directory{input}, quatre threads ont été créés en conséquence (Les threads sont nommés selon le pattern suivant notif@thread-\textbf{id}) et cela explique pourquoi nous observons dans les logs \lstinline|Executing step : [csv-inprogress]| dupliquée 4 fois. Autrement dit, cela signifie que le batcher applique de manière simultanée la première phase du traitement des fichiers (\lstinline|csv-inprogress|).
     \item \textbf{Lignes 18-21} : Ces logs indiquent que la première phase de traitement des fichiers est terminée.
     \item \textbf{Lignes 22-25} : Ces logs annoncent le début d'une nouvelle phase de traitement des fichiers CSV. Il s'agit de la phase de traitement CSV, qui concrétise le traitement effectif du batch. C'est dans cette étape que s'effectuent la lecture, la validation et la transformation des données, et enfin l'envoi des emails pour les données approuvées.
-    \item \textbf{Lignes 23-48} : Ces logs exposent les différentes phases par lesquelles transite chaque fichier, à ce stade vous allez sûrement remarquer qu'il y a des threads qui ont pu passer plus rapidement les étapes et terminer tout le processus avant les autres, et cela est dû au fait que chaque fichier a une taille différente et donc des délais d'exécution différents.
+    \item \textbf{Lignes 23-48} : Ces logs exposent les différentes phases par lesquelles transite chaque fichier, à ce stade vous allez sûrement remarquer qu'il y a des threads qui ont pu passer plus rapidement les étapes et terminer tout le processus avant les autres, cela est dû au fait que chaque fichier a une taille différente et donc des délais d'exécution différents.
     \item \textbf{Ligne 49} : Cette ligne révèle le temps d'exécution total écoulé lors du traitement des fichiers, qui est de 18s94ms. 
     \item \textbf{Ligne 50} : Fin du Job. 
 \end{itemize}
@@ -352,14 +393,135 @@ Par ailleurs, les utilisateurs concernés par les notifications recevront un mai
     \label{fig:notification_mail}
 \end{figure}
 \subsubsection{Tests unitaires}
-Pour lancer les tests unitaires crées lors de l'application
+Les tests unitaires servent à tester une partie (une unité) d’un système afin de s’assurer qu’il fonctionne correctement (build the system right).\\
+Comme Java est un langage orienté Objet, les tests JUnit sont regroupés dans des classes de test. Généralement, on groupe dans une classe les tests ayant la même classe comme point d’entrée et on nomme la classe de test à partir du nom de la classe testée préfixé ou suffixé par Test(s). Par exemple, pour tester la classe \lstinline|FlatFileItemReader|, on créera une classe \lstinline|TestFlatFileItemReader| ou \lstinline|FlatFileItemReaderTests|.
+\subsubsubsection*{Exécution des tests JUnit}
+L'exécution des tests unitaires se fait via Maven, et plus particulièrement avec le plugin \textbf{maven-surefire}. Une des méthodes pour lancer l'exécution des tests est d'exécuter la commande \lstinline|mvn test| dans le terminal du répertoire parent du projet. Cela permet notamment d'analyser le projet afin de découvrir les classes de test pour ensuite les exécuter.\\
+\begin{lstlisting}[style=DOS,numbers=left,language=tex, deletekeywords={for,source,test}, morekeywords={certains, logs, sont, omis, par, souci, de, concision}]
+$ mvn test
+[INFO] Scanning for projects...
+---- certains logs sont omis par souci de concision ----
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.cegedim.srh.notification.batch.FlatFileItemReaderTests
+---- certains logs sont omis par souci de concision ----
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.926 s - in com.cegedim.srh.notification.batch.FlatFileItemReaderTests
+[INFO] Running com.cegedim.srh.notification.batch.GedCSVAnalyticsProcessorTests
+---- certains logs sont omis par souci de concision ----
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.373 s - in com.cegedim.srh.notification.batch.GedCSVAnalyticsProcessorTests
+[INFO] Running com.cegedim.srh.notification.batch.MainApplicationTests
+---- certains logs sont omis par souci de concision ----
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.287 s - in com.cegedim.srh.notification.batch.MainApplicationTests
+[INFO]
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  22.359 s
+[INFO] Finished at: 2021-11-07T10:17:09+01:00
+[INFO] ------------------------------------------------------------------------
+\end{lstlisting}
+Dans notre cas, les résultats obtenus révèlent que sur un total de 7 tests, il y a eu 7 tests réussis face à 0 test échoué et 0 test ignoré.
 \subsubsection{Audit de code}
-La vérification d'un ensemble de règles de programmation est généralement faite lors d'une revue de code ou bien d'un audit de code, manuellement ou bien automatiquement afin de trouver les violations de règles de programmation, dans le but de les corriger.
-\subsubsection{Pseudo-Benchmark}
-\subsubsection{Synthèse}
+La vérification d'un ensemble de règles de programmation est généralement faite lors d'une revue de code ou bien d'un audit de code, manuellement ou bien automatiquement afin de trouver les violations de règles de programmation, dans le but de les corriger.\\
+Pour cela, nous utiliserons \textbf{SonarQube}, un outil d'analyse statique qui vise à mesurer la qualité du code d’un applicatif. Pour un projet donné, il fournit des métriques portant sur la qualité du code et permet d’identifier précisément les points à corriger (code mort, bugs potentiels, non-respect des standards, carence ou trop-plein de commentaires, etc.).
+\begin{beware}[borderline west={5pt}{0pt}{red}, coltitle={red}, title=Remarque : ]
+L'analyse SonarQube ne remplace en aucun cas les tests unitaires, mais permet d'identifier rapidement certains défauts du code.
+\end{beware}
+\subsubsubsection*{Prérequis}
+\begin{itemize}
+    \item La seule condition préalable à l'exécution de SonarQube est l'installation de Java (Oracle JRE 11 ou OpenJDK 11) sur votre machine.
+    \item Installer SonarQube (pour plus de détails, voir \href{https://docs.sonarqube.org/latest/setup/overview/}{la documentation officielle}).
+\end{itemize}
+\subsubsubsection*{Installation d'une instance locale de SonarQube}
+Vous pouvez essayer SonarQube en utilisant une installation traditionnelle avec le fichier zip :
+\begin{enumerate}
+    \item \href{https://www.sonarqube.org/downloads/}{Téléchargez} le fichier zip de SonarQube Community Edition.
+    \item Décompressez-le, dans un emplacement tel que \directory{C:/sonarqube} ou \directory{/opt/sonarqube}.
+    \item En tant qu'utilisateur non root, démarrez le serveur SonarQube :
+\begin{lstlisting}[numbers=none,language=bash]
+# Sous Windows, exécutez :
+C:\sonarqube\bin\windows-x86-64\StartSonar.bat
+
+# Sur les autres SE, en tant qu'utilisateur non root, exécutez :
+/opt/sonarqube/bin/[OS]/sonar.sh console
+\end{lstlisting}
+\end{enumerate}
+\subsubsubsection*{Mise en place d'une procédure d'analyse de projet}
+\begin{enumerate}
+    \item Une fois que votre instance est opérationnelle, connectez-vous à \url{http://localhost:9000} en utilisant les informations d'identification de l'administrateur système :
+    \begin{itemize}
+        \item \textbf{login} : admin
+        \item \textbf{mot de passe} : admin
+    \end{itemize}
+    \item Maintenant que vous êtes connecté à votre instance locale de SonarQube, vous pouvez analyser un projet (Dans notre cas, nous allons poursuivre notre démonstration en appliquant l'analyse Sonar sur le nouveau système d'envoi de notification) :
+    \begin{enumerate}
+        \item Créez un nouveau projet en choisissant le mode manuel.
+        \item Donnez à votre projet une clé de projet et un nom d'affichage et cliquez sur le bouton \textbf{Set Up} (voir figure ~\ref{fig:sonar-1}).
+        \begin{figure}[H]
+            \begin{center}
+                \includegraphics[width=0.75\linewidth]{images/sec5/sonar-1.png}
+                \caption{Mise en place d'un projet Sonar}
+                \label{fig:sonar-1}
+            \end{center} 
+        \end{figure}
+        \item Pour analyser votre projet localement, cliquez sur le bouton \textbf{Locally}.
+        \item Sous \textbf{Provide a token}, sélectionnez \textbf{Generate a token}. Donnez un nom à votre jeton, cliquez sur le bouton \textbf{Generate}, puis cliquez sur \textbf{Continue}.
+        \item Sélectionnez la langue principale de votre projet sous \textbf{Run analysis on your project}, et suivez les instructions pour analyser votre projet. 
+        \item L'exécution d'une analyse SonarQube avec Maven est très simple. Dans notre cas, il suffit d'exécuter la commande suivante dans le dossier racine du projet :
+\begin{lstlisting}[numbers=none,language=bash, deletekeywords={login}]
+mvn clean verify sonar:sonar \
+-Dsonar.projectKey=nouveau-syst-me-d-envoi-de-notification \
+-Dsonar.host.url=http://localhost:9000 \
+-Dsonar.login=8c6f1a4ff703b9701af4606125ef587d836e5ef8
+\end{lstlisting} 
+\end{enumerate}
+\end{enumerate}
+\subsubsubsection*{Analyse des résultats SonarQube}
+Une fois le projet analysé avec succès, nous pouvons consulter le résultat de cette première analyse sur SonarQube. Les résultats de l’analyse seront consultables sur \url{http://localhost:9000/}. Chaque projet dispose d’un espace d’analyse dédié :
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=\linewidth]{images/sec5/sonar-2.png}
+        \caption{Résultats récapitulatifs d'analyse SonarQube}
+        \label{fig:sonar-2}
+    \end{center} 
+\end{figure}
+SonarQube classe les défauts logiciels selon 3 catégories :
+\begin{itemize}
+    \item \textbf{Les bugs} : anomalies évidentes du code. Impactent la fiabilité (reliability) de l’application.
+    \item \textbf{Les vulnérabilités} : faiblesses du code pouvant nuire au système. Impactent la sécurité de l’application.
+    \item \textbf{Les « code smells »} : anti-patrons (ou anti-patterns). Impactent la maintenabilité de l’application.
+\end{itemize}
+La mention « Passed » signifie que le projet satisfait les exigences minimum définies dans l’espace « Barrières qualité ». Les paramètres par défaut peuvent être adaptés.\\
+Pour plus de détails sur les définitions des différentes métriques, veuillez consulter le lien de \href{https://docs.sonarqube.org/latest/user-guide/metric-definitions/}{la documentation officielle}.
+
+\subsubsection{Benchmark}
+Dans le cadre de notre étude, le Benchmark réalisé vise à donner une idée sur le temps d'exécution et sa relation avec les méthodes déployées lors de l'exploration des données ainsi que par rapport aux nombres de threads exécutés, il nous permettra par la suite de comparer les pratiques de développement logiciel instaurées dans l'ancien système à celles adoptées dans le nouveau système.\\
+
+Afin d'obtenir des résultats significatifs, nous allons tester les deux systèmes d'envoi de notifications avec un volume de données similaire (\textbf{1052 enregistrements}) et nous mesurerons ensuite le temps d'exécution nécessaire par les deux systèmes pour compléter le traitement de ce volume. Le tableau suivant (voir le tableau \ref{tab:benchmark}) précise les résultats des différentes expériences réalisées ainsi que le temps d'exécution écoulé pour chacune de celles-ci.  
+\begin{longtblr}[caption={Comparaison des délais d'exécution entre l'ancien et le nouveau système d'envoi de notifications},label={tab:benchmark}]{
+    hlines = {0.25pt,azure6},
+    vlines = {0.25pt,azure6},
+    colsep=4pt,
+    rowsep=4pt,
+    rowspec={Q[m] Q[m] Q[m] Q[m]},
+    colspec={QX[4]QX[3]X[3]X[3]},
+    row{1-4} = {font=\footnotesize}
+}
+\textbf{Système} & \textbf{Type de données d'entrée}  & \textbf{Occurrences} & \textbf{Nombre de threads} & \textbf{Environnement d'exécution} & \textbf{Temps d'exécution}\\
+Ancien & Requête Solr (objet JSON en retour) & 53 appels & 1 & Production & 9min2s\\
+Nouveau & Fichier CSV & 1 fichier & 1 & Local & 1min17s\\
+Nouveau & Fichier CSV & 10 fichiers & 10 & Local & 21s978ms\\
+\end{longtblr}
+\subsubsubsection*{Synthèse}
+Bien qu'il semble inapproprié de faire ce benchmark, étant donné qu'il existe certaines variables qui pourraient altérer les résultats des tests que nous n'avons pas pris en compte, en particulier l'environnement d'exécution de chacun des systèmes qui était supposé avoir un effet négligeable, ce benchmark a montré qu'il existe un écart important dans les délais obtenus. En effet, le temps d'exécution est passé de \textbf{9min2s} dans l'ancien système à \textbf{1min17s}, soit \textbf{7 fois} plus rapide, et cela, en utilisant uniquement le mode monothread dans le nouveau système ce qui témoigne déjà des améliorations apportées par ce dernier par rapport à l'ancien. En répartissant ce volume sur dix fichiers et en activant le mode multithreading fixé à 10 threads maximum, le temps d'exécution diminue à nouveau à \textbf{21s987ms}, soit \textbf{25 fois} plus rapide que l'ancien système, ce qui prouve cette fois, l'efficacité et la rentabilité du bon usage du système grâce aux paradigmes du multithreading.
 \addcontentsline{toc}{subsection}{Conclusion}
 \subsection*{Conclusion}
-Dans ce chapitre, nous avons essayé d'exposer une démo sur l'un des travaux réalisés de refonte, à savoir le système de la refonte. Dans cette démo, nous avons essayé d'exposer  système final réalisé tout en précisant le processus suivi partant de la configuration, l'exécution, l'audit du code et les tests.
-En fait, nous avons réalisé l'implémentation en respectant la conception élaborée et les pratiques préconisées.
-Enfin, avec ce chapitre, nous terminons la phase de réalisation.
+Dans ce chapitre, nous avons exposé les outils de développement et les différents composants logiciels et matériels étudiés durant toute la période du stage, puis dans une deuxième partie, nous avons abordé la démonstration de l'un des travaux assignés, à savoir le système de notification tout en spécifiant le processus suivi partant de la configuration, l'exécution, les tests unitaires à l'audit de code.
+En fait, nous nous sommes efforcés d'implémenter le travail conformément à la conception et aux pratiques préconisées.
+Enfin, avec ce chapitre, nous terminons la phase d'implémentation.
 %%%%%%%%%%%%%%%%%%

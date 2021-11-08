@@ -4,7 +4,34 @@
 {\color{chambray}\normalfont\Large\bfseries}{}{1em}{}
 \section{ANNEXES}
 \markboth{ANNEXES}{}
-\subsection{Audit de code : checklist élaborée par Cegedim SRH }
+\subsection{Présentation des principales interfaces d'Arkevia}
+\null\vfill
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=\linewidth]{images/annexes/scr1.png}
+        \caption{Page d'authentification Arkevia}
+        \label{fig:arkevia1}
+    \end{center}
+\end{figure}
+\vfill\null
+\clearpage
+\null\vfill
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=\linewidth]{images/annexes/scr2.png}
+        \caption{Page de gestion des documents}
+        \label{fig:batch}
+    \end{center}
+\end{figure}
+\vfill\null
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=\linewidth]{images/annexes/scr3.png}
+        \caption{Page de gestion de compte Arkevia}
+        \label{fig:batch}
+    \end{center}
+\end{figure}
+\subsection{Audit de code : checklist élaborée par Cegedim SRH}
 \label{sec:checklist}
 \begin{longtblr}[caption={Extrait des règles et pratiques de développement logiciel instaurées par Cegedim SRH}, label={tab:dev}]{
     hlines = {0.25pt,azure6},
@@ -171,9 +198,38 @@ RG\_DEV\_GN\_008 & Cas des dépassements de capacité :
 
 \end{longtblr}
 \subsection{Outils utilisés pour la réalisation de ce rapport}
-Adobe Illustrator
-Draw.io
-LaTeX
-Figma
-Vs code
+Ce rapport est basé sur un modèle de rapport pédagogique conçu pour le département d'informatique de l'Université d'Avignon, par son auteur Vincent Labatut.\\
+Pour obtenir ce modèle, veuillez visiter le site suivant : \url{https://fr.overleaf.com/latex/templates/modele-de-rapport-avignon-universite/pdbgdpzsgwrt}.\\
+
+Le rapport est compilé à l'aide de \textbf{LuaLaTeX}, une variante de \textbf{LaTeX} utilisant le langage de script \textbf{Lua}. \textbf{LuaTeX} a été choisi comme successeur de \textbf{pdfTeX}. La structure générale et la plupart des commandes sont similaires à celles de LaTeX.\\
+
+Il a également été utile d'utiliser certains supports pour produire les ressources et les illustrations incluses dans le rapport. Le tableau suivant rassemble les différents outils utilisés dans la mise en œuvre de ce rapport.
+\begin{longtblr}[caption={Supports utilisés pour la réalisation de ce rapport}]{
+    hlines = {0.25pt,cyan6},
+    vlines = {0.25pt,cyan6},
+    colsep=4pt,
+    rowsep=4pt,
+	colspec={cX},
+    rowspec={Q[m] Q[m] Q[m] Q[m] Q[m] Q[m]},
+}
+
+{\includegraphics[height=8mm]{images/annexes/adobecc.pdf}
+ \\\textbf{Adobe Illustrator}
+}
+&  
+Adobe Illustrator est un logiciel de création graphique vectorielle. Il fait partie de la gamme Adobe, peut être utilisé indépendamment ou en complément de Photoshop, et offre des outils de dessin vectoriel puissants. Les images vectorielles sont constituées de courbes générées par des formules mathématiques.\\
+{\includegraphics[height=8mm]{images/annexes/draw.pdf}
+ \\\textbf{Draw.io}
+ }
+ & 
+ Draw.io est une application de création de diagrammes et schémas sous licence Apache disponible sous Windows, macOS, Linux, sous forme d’application web et intégrée à des services cloud tels Nextcloud ou Google Drive.
+ \\
+ {\includegraphics[height=8mm]{images/annexes/figma.pdf}
+ \\\textbf{Figma}
+ }
+ & Figma est un outil collaboratif de conception et de prototypage d'interfaces.\\
+{\includegraphics[width=8mm]{images/annexes/vscode.pdf} \\
+\textbf{Visual Studio Code}
+} & Visual Studio Code est un éditeur de code source puissant, développé par Microsoft. Il est disponible pour Windows, Mac et Linux.\\
+\end{longtblr}
 \end{appendices}
