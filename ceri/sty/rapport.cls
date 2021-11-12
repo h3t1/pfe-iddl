@@ -648,10 +648,10 @@
 	
 	% custom headers and footers
 	\pageStyleA
-	%\includepdf[pages={1}]{images/cover-pfe@07112021.pdf}
+	\includepdf[pages={1}]{images/cover-pfe@10112021.pdf}
 	%\thispagestyle{fancy}	% force header/footer
 	\newpage
-		\include{cover}
+		%\include{cover}
 	    \include{avant-propos}
 		\include{remerciements}	
 		%\include{resume}
